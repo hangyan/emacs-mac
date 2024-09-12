@@ -104,7 +104,9 @@
 (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
 
-
+;; flycheck
+;; spell check
+(add-hook 'after-init-hook #'global-flycheck-mode)
 
 
 ;; indent-guide
@@ -135,16 +137,35 @@
 (setq make-backup-files nil)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes '(tango-dark))
- '(package-selected-packages '(company go-mode exec-path-from-shell helm)))
+ '(package-selected-packages '(flycheck company go-mode exec-path-from-shell helm)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "UbuntuMono Nerd Font Mono" :foundry "nil" :slant normal :weight regular :height 160 :width normal)))))
+
+
+
+
+(set-face-attribute 'mode-line nil
+                    :background "#353644"
+                    :foreground "white"
+                    :box '(:line-width 8 :color "#353644")
+                    :overline nil
+                    :underline nil)
+
+(set-face-attribute 'mode-line-inactive nil
+                    :background "#565063"
+                    :foreground "white"
+                    :box '(:line-width 8 :color "#565063")
+                    :overline nil
+                    :underline nil)
