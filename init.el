@@ -145,7 +145,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes '(tango-dark))
- '(package-selected-packages '(flycheck company go-mode exec-path-from-shell helm)))
+ '(package-selected-packages '(ag flycheck company go-mode exec-path-from-shell helm)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -169,3 +169,24 @@
                     :box '(:line-width 8 :color "#565063")
                     :overline nil
                     :underline nil)
+
+
+
+;;
+
+;; query-and-repalce function
+
+(defun entire-buffer-replace (from to)
+  "Do search and replace on entire buffer without moving point."
+  (interactive "MReplace: \nMWith: ")
+  (save-excursion
+    (beginning-of-buffer)
+    (let ((case-fold-search nil))
+      (while (search-forward from nil t)
+        (replace-match to t t)))))
+
+(global-set-key (kbd "M-%") 'entire-buffer-replace)
+
+
+;; ag search
+(global-set-key (kbd "C-c s") 'ag-project-regexp)
