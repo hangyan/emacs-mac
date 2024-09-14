@@ -113,6 +113,13 @@
 ;; flycheck
 ;; spell check
 (add-hook 'after-init-hook #'global-flycheck-mode)
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*Flycheck errors*" eos)
+              (display-buffer-reuse-window
+               display-buffer-in-side-window)
+              (side            . bottom)
+              (reusable-frames . visible)
+              (window-height   . 0.33)))
 
 
 ;; indent-guide
@@ -200,6 +207,16 @@
 ;; ag search
 (global-set-key (kbd "C-c s") 'ag-project-regexp)
 
+;; mac dired ls
+(when (string= system-type "darwin")
+  (setq dired-use-ls-dired nil))
+
+
+
+;; imenu buffer
+(global-set-key (kbd "C-'") #'imenu-list-smart-toggle)
+(setq imenu-list-auto-resize t)
+(setq imenu-list-position 'left)
 
 
 ;; symbol
