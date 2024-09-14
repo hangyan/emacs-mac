@@ -29,7 +29,7 @@
 
 
 ;; company
-
+(yas-global-mode)
 (global-company-mode t)
 ;; Navigate in completion minibuffer with `C-n` and `C-p`.
 (define-key company-active-map (kbd "C-n") 'company-select-next)
@@ -38,7 +38,9 @@
 ;; Provide instant autocompletion.
 (setq company-idle-delay 0.0)
 
+
 ;; face
+;; Or:
 (require 'company-box)
 (add-hook 'company-mode-hook 'company-box-mode)
 
@@ -100,6 +102,10 @@
 ;; go-mode lsp
 (add-hook 'go-mode-hook #'lsp-deferred)
 
+;; go mode test
+(global-set-key (kbd "C-x g t") 'go-test-current-test)
+(global-set-key (kbd "C-x g f") 'go-test-current-file)
+
 ;; Set up before-save hooks to format buffer and add/delete imports.
 ;; Make sure you don't have other gofmt/goimports hooks enabled.
 (defun lsp-go-install-save-hooks ()
@@ -108,6 +114,15 @@
 (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 ;; (setq gofmt-command "gofmt")
 ;; (add-hook 'before-save-hook #'gofmt-before-save)
+
+
+;; lsp perf
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+(setq lsp-idle-delay 0.500)
+(setq lsp-log-io nil) ; if set to true can cause a performance hit
+(setq lsp-file-watch-threshold 2000)
+
 
 
 ;; flycheck
@@ -160,7 +175,7 @@
  '(custom-enabled-themes '(tango-dark))
  '(global-display-line-numbers-mode t)
  '(package-selected-packages
-   '(company-box gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
+   '(gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -226,3 +241,17 @@
 (global-set-key (kbd "M-p") 'symbol-overlay-jump-prev)
 (global-set-key (kbd "<f7>") 'symbol-overlay-mode)
 (global-set-key (kbd "<f8>") 'symbol-overlay-remove-all)
+
+
+;; windows
+(defun switch-to-minibuffer ()
+  "Switch to minibuffer window."
+  (interactive)
+  (if (active-minibuffer-window)
+      (select-window (active-minibuffer-window))
+    (error "Minibuffer is not active")))
+
+(global-set-key "\C-co" 'switch-to-minibuffer) 
+
+
+
