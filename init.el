@@ -107,6 +107,13 @@
 ;; flycheck
 ;; spell check
 (add-hook 'after-init-hook #'global-flycheck-mode)
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*Flycheck errors*" eos)
+              (display-buffer-reuse-window
+               display-buffer-in-side-window)
+              (side            . bottom)
+              (reusable-frames . visible)
+              (window-height   . 0.33)))
 
 
 ;; indent-guide
@@ -147,7 +154,7 @@
  '(custom-enabled-themes '(tango-dark))
  '(global-display-line-numbers-mode t)
  '(package-selected-packages
-   '(imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
+   '(symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -198,7 +205,7 @@
 (setq dired-dwim-target t)
 
 ;; mac dired ls
-(when (string= system-type "darwin")       
+(when (string= system-type "darwin")
   (setq dired-use-ls-dired nil))
 
 
@@ -206,3 +213,14 @@
 (global-set-key (kbd "C-'") #'imenu-list-smart-toggle)
 (setq imenu-list-auto-resize t)
 (setq imenu-list-position 'left)
+
+
+;; hilight symbol
+(require 'symbol-overlay)
+(global-set-key (kbd "M-i") 'symbol-overlay-put)
+(global-set-key (kbd "M-n") 'symbol-overlay-switch-forward)
+(global-set-key (kbd "M-p") 'symbol-overlay-switch-backward)
+(global-set-key (kbd "<f7>") 'symbol-overlay-mode)
+(global-set-key (kbd "<f8>") 'symbol-overlay-remove-all)
+
+
