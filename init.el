@@ -102,6 +102,8 @@
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
 (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+;; (setq gofmt-command "gofmt")
+;; (add-hook 'before-save-hook #'gofmt-before-save)
 
 
 ;; flycheck
@@ -190,3 +192,13 @@
 
 ;; ag search
 (global-set-key (kbd "C-c s") 'ag-project-regexp)
+
+
+
+;; symbol
+(require 'symbol-overlay)
+(global-set-key (kbd "M-i") 'symbol-overlay-put)
+(global-set-key (kbd "M-n") 'symbol-overlay-jump-next)
+(global-set-key (kbd "M-p") 'symbol-overlay-jump-prev)
+(global-set-key (kbd "<f7>") 'symbol-overlay-mode)
+(global-set-key (kbd "<f8>") 'symbol-overlay-remove-all)
