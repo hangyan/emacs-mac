@@ -38,6 +38,10 @@
 ;; Provide instant autocompletion.
 (setq company-idle-delay 0.0)
 
+;; face
+(require 'company-box)
+(add-hook 'company-mode-hook 'company-box-mode)
+
 ;; full path
 (setq frame-title-format
       (list (format "%s %%S: %%j " (system-name))
@@ -82,13 +86,13 @@
        (setenv "PATH" (mapconcat #'identity exec-path path-separator)))
       ((eq system-type 'darwin)
        ;; mac-specific code goes here.
-       (setenv "GOROOT" "/usr/local/go")
+       (setenv "GOROOT" "/usr/local/opt/go@1.23/libexec")
        (setenv "GOPATH" "/Users/yayu/Golang")
 
        (add-to-list 'exec-path "~/Golang/bin")
        (if (file-exists-p "~/.go.env")
 	   (load-env-vars "~/.go.env"))
-       (setenv "PATH" (concat  "/usr/local/go/bin" ":" (getenv "PATH")))
+       (setenv "PATH" (concat  "/usr/local/opt/go@1.23/libexec/bin" ":" (getenv "PATH")))
        ))
 
 
@@ -147,13 +151,16 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes '(tango-dark))
- '(package-selected-packages '(ag flycheck company go-mode exec-path-from-shell helm)))
+ '(global-display-line-numbers-mode t)
+ '(package-selected-packages
+   '(company-box gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
+ '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "UbuntuMono Nerd Font Mono" :foundry "nil" :slant normal :weight regular :height 160 :width normal)))))
+ '(default ((t (:family "Monaspace Neon Var" :foundry "nil" :slant normal :weight medium :height 140 :width normal)))))
 
 
 
