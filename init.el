@@ -1,4 +1,4 @@
-;; comments for comand
+;; comments for command
 ;; ;; build gopls on mac 13.5, fetch the source code and :
 ;; CGO_ENABLED=1 go build -ldflags '-w -s "-extldflags=-lresolv -L/Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/lib -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/System/Library/Frameworks/" '
 
@@ -88,13 +88,13 @@
        (setenv "PATH" (mapconcat #'identity exec-path path-separator)))
       ((eq system-type 'darwin)
        ;; mac-specific code goes here.
-       (setenv "GOROOT" "/usr/local/opt/go@1.23/libexec")
+       (setenv "GOROOT" "/usr/local/go/")
        (setenv "GOPATH" "/Users/yayu/Golang")
 
        (add-to-list 'exec-path "~/Golang/bin")
        (if (file-exists-p "~/.go.env")
 	   (load-env-vars "~/.go.env"))
-       (setenv "PATH" (concat  "/usr/local/opt/go@1.23/libexec/bin" ":" (getenv "PATH")))
+       (setenv "PATH" (concat  "/usr/local/go/bin" ":" (getenv "PATH")))
        ))
 
 
@@ -175,7 +175,7 @@
  '(custom-enabled-themes '(tango-dark))
  '(global-display-line-numbers-mode t)
  '(package-selected-packages
-   '(gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
+   '(helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -220,11 +220,18 @@
 
 
 ;; ag search
+;; first one create new window on the right. helm on the bottom, so we use helm.
+(setq ag-highlight-search t)
+(setq ag-reuse-buffers 't)
 (global-set-key (kbd "C-c s") 'ag-project-regexp)
+;; (global-set-key (kbd "C-c s") 'helm-grep-do-git-grep)
 
 ;; mac dired ls
 (when (string= system-type "darwin")
   (setq dired-use-ls-dired nil))
+
+;; dired sidebar
+(global-set-key (kbd "C-x C-n") 'dired-sidebar-toggle-sidebar)
 
 
 
@@ -251,7 +258,45 @@
       (select-window (active-minibuffer-window))
     (error "Minibuffer is not active")))
 
-(global-set-key "\C-co" 'switch-to-minibuffer) 
+(global-set-key "\C-co" 'switch-to-minibuffer)
 
 
+(global-set-key (kbd "M-<down>") 'windmove-down)
+(global-set-key (kbd "M-<up>") 'windmove-up)
+(global-set-key (kbd "M-<left>") 'windmove-left)
+(global-set-key (kbd "M-<right>") 'windmove-right)
 
+	       
+
+;; column number
+(setq column-number-mode t)
+
+
+;; flyspell
+
+(defun flyspell-on-for-buffer-type ()
+  "Enable Flyspell appropriately for the major mode of the current buffer.  Uses `flyspell-prog-mode' for modes derived from `prog-mode', so only strings and comments get checked.  All other buffers get `flyspell-mode' to check all text.  If flyspell is already enabled, does nothing."
+  (interactive)
+  (if (not (symbol-value flyspell-mode)) ; if not already on
+      (progn
+	(if (derived-mode-p 'prog-mode)
+	    (progn
+	      (message "Flyspell on (code)")
+	      (flyspell-prog-mode))
+	  ;; else
+	  (progn
+	    (message "Flyspell on (text)")
+	    (flyspell-mode 1)))
+	;; I tried putting (flyspell-buffer) here but it didn't seem to work
+	)))
+
+(defun flyspell-toggle ()
+  "Turn Flyspell on if it is off, or off if it is on.  When turning on, it uses `flyspell-on-for-buffer-type' so code-vs-text is handled appropriately."
+  (interactive)
+  (if (symbol-value flyspell-mode)
+      (progn ; flyspell is on, turn it off
+	(message "Flyspell off")
+	(flyspell-mode -1))
+					; else - flyspell is off, turn it on
+    (flyspell-on-for-buffer-type)))
+(global-set-key (kbd "C-c f") 'flyspell-toggle )
