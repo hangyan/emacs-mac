@@ -175,7 +175,7 @@
  '(custom-enabled-themes '(tango-dark))
  '(global-display-line-numbers-mode t)
  '(package-selected-packages
-   '(helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
+   '(dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -300,3 +300,14 @@
 					; else - flyspell is off, turn it on
     (flyspell-on-for-buffer-type)))
 (global-set-key (kbd "C-c f") 'flyspell-toggle )
+
+
+;; supper key
+(setq mac-command-modifier 'meta) ; make cmd key do Meta
+(setq mac-option-modifier 'super) ; make opt key do Super
+(setq mac-control-modifier 'control) ; make Control key do Control
+(setq ns-function-modifier 'hyper)  ; make Fn key do Hyper
+
+
+;; mark
+
