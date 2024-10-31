@@ -28,13 +28,12 @@
 
 
 
-;; company
+;;; company
 (yas-global-mode)
 (global-company-mode t)
 ;; Navigate in completion minibuffer with `C-n` and `C-p`.
 (define-key company-active-map (kbd "C-n") 'company-select-next)
 (define-key company-active-map (kbd "C-p") 'company-select-previous)
-
 ;; Provide instant autocompletion.
 (setq company-idle-delay 0.0)
 
@@ -106,6 +105,10 @@
 (global-set-key (kbd "C-x g t") 'go-test-current-test)
 (global-set-key (kbd "C-x g f") 'go-test-current-file)
 
+					;； go mode rename
+;; go install golang.org/x/tools/cmd/gorename@latest
+;; not working, don't know why.
+
 ;; Set up before-save hooks to format buffer and add/delete imports.
 ;; Make sure you don't have other gofmt/goimports hooks enabled.
 (defun lsp-go-install-save-hooks ()
@@ -172,17 +175,18 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
  '(custom-enabled-themes '(tango-dark))
  '(global-display-line-numbers-mode t)
  '(package-selected-packages
-   '(dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
+   '(rainbow-delimiters smartparens indent-bars md4rd dashboard-hackernews hackernews deft dashboard blamer dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Monaspace Neon Var" :foundry "nil" :slant normal :weight medium :height 140 :width normal)))))
+ '(default ((t (:family "UbuntuMono Nerd Font" :foundry "nil" :slant normal :weight regular :height 180 :width normal)))))
 
 
 
@@ -309,5 +313,35 @@
 (setq ns-function-modifier 'hyper)  ; make Fn key do Hyper
 
 
-;; mark
+;; git blamer
+(global-set-key (kbd "C-c i") 'blamer-show-commit-info)
 
+;; dashboard
+(require 'dashboard)
+(dashboard-setup-startup-hook)
+;; (setq dashboard-items '((hackernews . 10)))
+
+;; bookmarks
+(global-set-key (kbd "C-x r l") 'helm-bookmarks)
+
+
+;; deft notes
+(setq deft-extensions '("txt" "tex" "org"))
+(setq deft-directory "~/Vmware/notes")
+(setq deft-recursive t)
+(global-set-key [f9] 'deft)
+
+
+
+;; reddit
+(setq md4rd-subs-active '(BlackMythWukong))
+
+;; indent-bar
+(add-hook 'python-mode-hook #'indent-bars-mode)
+(add-hook 'go-mode-hook #'indent-bars-mode)
+
+
+;; finally, smartparens
+(require 'smartparens-config)
+(add-hook 'prog-mode-hook #'smartparens-mode)
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
