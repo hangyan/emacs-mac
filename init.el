@@ -115,6 +115,7 @@
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
 (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
 ;; (setq gofmt-command "gofmt")
 ;; (add-hook 'before-save-hook #'gofmt-before-save)
 
@@ -125,6 +126,12 @@
 (setq lsp-idle-delay 0.500)
 (setq lsp-log-io nil) ; if set to true can cause a performance hit
 (setq lsp-file-watch-threshold 2000)
+
+;; lsp ui
+(require 'lsp-ui)
+(add-hook 'go-mode-hook #'lsp-ui-mode)
+(global-set-key (kbd "C-'") #'lsp-ui-imenu)
+
 
 
 
@@ -178,15 +185,17 @@
  '(column-number-mode t)
  '(custom-enabled-themes '(tango-dark))
  '(global-display-line-numbers-mode t)
+ '(lsp-ui-imenu-auto-refresh 'after-save)
+ '(lsp-ui-imenu-buffer-position 'left)
  '(package-selected-packages
-   '(rainbow-delimiters smartparens indent-bars md4rd dashboard-hackernews hackernews deft dashboard blamer dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
+   '(lsp-ui smart-compile rainbow-delimiters smartparens indent-bars md4rd dashboard-hackernews hackernews deft dashboard blamer dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "UbuntuMono Nerd Font" :foundry "nil" :slant normal :weight regular :height 180 :width normal)))))
+ '(default ((t (:family "JetBrains Mono" :foundry "nil" :slant normal :weight regular :height 180 :width normal)))))
 
 
 
@@ -239,8 +248,8 @@
 
 
 
-;; imenu buffer
-(global-set-key (kbd "C-'") #'imenu-list-smart-toggle)
+;; imenu buffer. this global key replaced by lsp-ui
+;; (global-set-key (kbd "C-'") #'imenu-list-smart-toggle) 
 (setq imenu-list-auto-resize t)
 (setq imenu-list-position 'left)
 
@@ -306,6 +315,14 @@
 (global-set-key (kbd "C-c f") 'flyspell-toggle )
 
 
+(defun my-save-word ()
+  (interactive)
+  (let ((current-location (point))
+         (word (flyspell-get-word)))
+    (when (consp word)    
+      (flyspell-do-correct 'save nil (car word) current-location (cadr word) (caddr word) current-location))))
+
+
 ;; supper key
 (setq mac-command-modifier 'meta) ; make cmd key do Meta
 (setq mac-option-modifier 'super) ; make opt key do Super
@@ -325,23 +342,31 @@
 (global-set-key (kbd "C-x r l") 'helm-bookmarks)
 
 
-;; deft notes
-(setq deft-extensions '("txt" "tex" "org"))
-(setq deft-directory "~/Vmware/notes")
-(setq deft-recursive t)
-(global-set-key [f9] 'deft)
 
-
-
-;; reddit
-(setq md4rd-subs-active '(BlackMythWukong))
 
 ;; indent-bar
-(add-hook 'python-mode-hook #'indent-bars-mode)
-(add-hook 'go-mode-hook #'indent-bars-mode)
+;; (add-hook 'python-mode-hook #'indent-bars-mode)
+;; (add-hook 'go-mode-hook #'indent-bars-mode)
 
 
 ;; finally, smartparens
 (require 'smartparens-config)
 (add-hook 'prog-mode-hook #'smartparens-mode)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
+
+
+;; smart compile
+(defvar smart-compile-alist
+  '(("\\.c$"          . "gcc -O2 %f -lm -o %n")
+    ("\\.[Cc]+[Pp]*$" . "g++ -O2 %f -lm -o %n")
+    ("\\.java$"       . "javac %f")
+    ("\\.f90$"        . "f90 %f -o %n")
+    ("\\.[Ff]$"       . "f77 %f -o %n")
+    ("\\.pl$"         . "perl -cw %f")
+    ("\\.mp$"	      . "mptopdf %f")
+    ("\\.php$"        . "php %f")
+    ("\\.tex$"        . "latex %f")
+    ("\\.texi$"       . "makeinfo %f")
+    ("\\.yaml$" . "kubectl apply -f %f")
+    (emacs-lisp-mode  . (emacs-lisp-byte-compile))))
