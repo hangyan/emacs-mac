@@ -132,6 +132,15 @@
 (add-hook 'go-mode-hook #'lsp-ui-mode)
 (global-set-key (kbd "C-'") #'lsp-ui-imenu)
 
+;; lsp-treemacs / treemacs
+(lsp-treemacs-sync-mode 1)
+(setq treemacs-project-follow-mode t)
+(setq treemacs-display-current-project-exclusively t)
+(global-set-key (kbd "<f5>") 'treemacs)
+(setq treemacs-filewatch-mode t)
+(setq treemacs-git-mode 'simple)
+(setq treemacs-git-commit-diff-mode t)
+
 
 
 
@@ -188,7 +197,7 @@
  '(lsp-ui-imenu-auto-refresh 'after-save)
  '(lsp-ui-imenu-buffer-position 'left)
  '(package-selected-packages
-   '(lsp-ui smart-compile rainbow-delimiters smartparens indent-bars md4rd dashboard-hackernews hackernews deft dashboard blamer dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
+   '(git-gutter diff-hl lsp-treemacs lsp-ui smart-compile rainbow-delimiters smartparens indent-bars md4rd dashboard-hackernews hackernews deft dashboard blamer dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -330,8 +339,9 @@
 (setq ns-function-modifier 'hyper)  ; make Fn key do Hyper
 
 
-;; git blamer
+;; git blamer / git gutter
 (global-set-key (kbd "C-c i") 'blamer-show-commit-info)
+(global-git-gutter-mode +1)
 
 ;; dashboard
 (require 'dashboard)
@@ -370,3 +380,4 @@
     ("\\.texi$"       . "makeinfo %f")
     ("\\.yaml$" . "kubectl apply -f %f")
     (emacs-lisp-mode  . (emacs-lisp-byte-compile))))
+
