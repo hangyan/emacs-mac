@@ -153,7 +153,7 @@
                display-buffer-in-side-window)
               (side            . bottom)
               (reusable-frames . visible)
-              (window-height   . 0.33)))
+              (window-height   . 0.25)))
 
 
 ;; indent-guide
@@ -193,39 +193,22 @@
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(custom-enabled-themes '(tango-dark))
+ '(git-gutter:update-interval 2)
  '(global-display-line-numbers-mode t)
  '(lsp-ui-imenu-auto-refresh 'after-save)
  '(lsp-ui-imenu-buffer-position 'left)
  '(package-selected-packages
-   '(git-gutter diff-hl lsp-treemacs lsp-ui smart-compile rainbow-delimiters smartparens indent-bars md4rd dashboard-hackernews hackernews deft dashboard blamer dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
+   '(smart-mode-line  git-gutter lsp-treemacs lsp-ui smart-compile rainbow-delimiters smartparens indent-bars dashboard blamer dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "JetBrains Mono" :foundry "nil" :slant normal :weight regular :height 180 :width normal)))))
+ '(default ((t (:family "WenQuanYi Micro Hei Mono" :foundry "nil" :slant normal :weight regular :height 180 :width normal)))))
 
 
 
-
-(set-face-attribute 'mode-line nil
-                    :background "#353644"
-                    :foreground "white"
-                    :box '(:line-width 8 :color "#353644")
-                    :overline nil
-                    :underline nil)
-
-(set-face-attribute 'mode-line-inactive nil
-                    :background "#565063"
-                    :foreground "white"
-                    :box '(:line-width 8 :color "#565063")
-                    :overline nil
-                    :underline nil)
-
-
-
-;;
 
 ;; query-and-repalce function
 
@@ -372,6 +355,7 @@
     ("\\.[Cc]+[Pp]*$" . "g++ -O2 %f -lm -o %n")
     ("\\.java$"       . "javac %f")
     ("\\.f90$"        . "f90 %f -o %n")
+    ("go.mod$" . "go mod tidy")
     ("\\.[Ff]$"       . "f77 %f -o %n")
     ("\\.pl$"         . "perl -cw %f")
     ("\\.mp$"	      . "mptopdf %f")
@@ -381,3 +365,9 @@
     ("\\.yaml$" . "kubectl apply -f %f")
     (emacs-lisp-mode  . (emacs-lisp-byte-compile))))
 
+
+
+;; mode line
+(setq sml/no-confirm-load-theme t)
+(sml/setup)
+(setq sml/theme 'dark)
