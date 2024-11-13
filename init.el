@@ -130,12 +130,13 @@
 ;; lsp ui
 (require 'lsp-ui)
 (add-hook 'go-mode-hook #'lsp-ui-mode)
-(global-set-key (kbd "C-'") #'lsp-ui-imenu)
+
 
 ;; lsp-treemacs / treemacs
 (lsp-treemacs-sync-mode 1)
 (setq treemacs-project-follow-mode t)
 (setq treemacs-display-current-project-exclusively t)
+(global-set-key (kbd "C-'") 'lsp-treemacs-symbols)
 (global-set-key (kbd "<f5>") 'treemacs)
 (setq treemacs-filewatch-mode t)
 (setq treemacs-git-mode 'simple)
@@ -192,13 +193,15 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(custom-enabled-themes '(tango-dark))
+ '(custom-enabled-themes '(smart-mode-line-dark tango-dark))
+ '(custom-safe-themes
+   '("fc1275617f9c8d1c8351df9667d750a8e3da2658077cfdda2ca281a2ebc914e0" default))
  '(git-gutter:update-interval 2)
  '(global-display-line-numbers-mode t)
  '(lsp-ui-imenu-auto-refresh 'after-save)
  '(lsp-ui-imenu-buffer-position 'left)
  '(package-selected-packages
-   '(smart-mode-line  git-gutter lsp-treemacs lsp-ui smart-compile rainbow-delimiters smartparens indent-bars dashboard blamer dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
+   '(smart-mode-line git-gutter lsp-treemacs lsp-ui smart-compile rainbow-delimiters smartparens indent-bars dashboard blamer dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
