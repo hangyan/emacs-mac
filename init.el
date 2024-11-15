@@ -208,7 +208,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "WenQuanYi Micro Hei Mono" :foundry "nil" :slant normal :weight regular :height 180 :width normal)))))
+ '(default ((t (:family "UbuntuMono Nerd Font Mono" :foundry "nil" :slant normal :weight regular :height 180 :width normal)))))
 
 
 
@@ -359,6 +359,7 @@
     ("\\.java$"       . "javac %f")
     ("\\.f90$"        . "f90 %f -o %n")
     ("go.mod$" . "go mod tidy")
+    ("\\.go$" . "go run %f")
     ("\\.[Ff]$"       . "f77 %f -o %n")
     ("\\.pl$"         . "perl -cw %f")
     ("\\.mp$"	      . "mptopdf %f")
@@ -368,9 +369,20 @@
     ("\\.yaml$" . "kubectl apply -f %f")
     (emacs-lisp-mode  . (emacs-lisp-byte-compile))))
 
-
+(global-set-key (kbd "<f6>") 'smart-compile)
 
 ;; mode line
 (setq sml/no-confirm-load-theme t)
 (sml/setup)
 (setq sml/theme 'dark)
+
+
+;; auto-revert
+(setq global-auto-revert-mode t)
+
+
+
+;; auto save  files
+(setq auto-save-file-name-transforms '((".*" "~/.emacs-saves/" t)))
+(setq lock-file-name-transforms '((".*" "~/.emacs-saves/" t)))
+(setq backup-directory-alist '((".*" . "~/.emacs-saves/")))
