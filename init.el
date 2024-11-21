@@ -8,7 +8,8 @@
   (interactive)
   (find-file user-init-file))
 
-
+(setenv "LSP_USE_PLISTS" "true")
+(setq lsp-use-plists t)
 
 ;; line operation
 (defun mark-from-point-to-end-of-line ()
@@ -142,7 +143,37 @@
 (setq treemacs-git-mode 'simple)
 (setq treemacs-git-commit-diff-mode t)
 
+;; lsp booster
+(defun lsp-booster--advice-json-parse (old-fn &rest args)
+  "Try to parse bytecode instead of json."
+  (or
+   (when (equal (following-char) ?#)
+     (let ((bytecode (read (current-buffer))))
+       (when (byte-code-function-p bytecode)
+         (funcall bytecode))))
+   (apply old-fn args)))
+(advice-add (if (progn (require 'json)
+                       (fboundp 'json-parse-buffer))
+                'json-parse-buffer
+              'json-read)
+            :around
+            #'lsp-booster--advice-json-parse)
 
+(defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
+  "Prepend emacs-lsp-booster command to lsp CMD."
+  (let ((orig-result (funcall old-fn cmd test?)))
+    (if (and (not test?)                             ;; for check lsp-server-present?
+             (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
+             lsp-use-plists
+             (not (functionp 'json-rpc-connection))  ;; native json-rpc
+             (executable-find "emacs-lsp-booster"))
+        (progn
+          (when-let ((command-from-exec-path (executable-find (car orig-result))))  ;; resolve command from exec-path (in case not found in $PATH)
+            (setcar orig-result command-from-exec-path))
+          (message "Using emacs-lsp-booster for %s!" orig-result)
+          (cons "emacs-lsp-booster" orig-result))
+      orig-result)))
+(advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
 
 
 ;; flycheck
@@ -193,22 +224,23 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(custom-enabled-themes '(smart-mode-line-dark tango-dark))
+ '(company-tooltip-align-annotations t)
+ '(custom-enabled-themes '(tsdh-dark))
  '(custom-safe-themes
-   '("fc1275617f9c8d1c8351df9667d750a8e3da2658077cfdda2ca281a2ebc914e0" default))
+   '("e452b385e3f9cb05603fef58f3d65f73774137943fd75e6281dab3ff385851b9" "fdaf036ac62069f9b785ad2486b8106fb704b7c898d73ff7f66dc657523349d3" "fc1275617f9c8d1c8351df9667d750a8e3da2658077cfdda2ca281a2ebc914e0" default))
  '(git-gutter:update-interval 2)
  '(global-display-line-numbers-mode t)
  '(lsp-ui-imenu-auto-refresh 'after-save)
  '(lsp-ui-imenu-buffer-position 'left)
  '(package-selected-packages
-   '(smart-mode-line git-gutter lsp-treemacs lsp-ui smart-compile rainbow-delimiters smartparens indent-bars dashboard blamer dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
+   '(spacegray-theme melancholy-theme visual-replace markdownfmt mistty smart-mode-line git-gutter smart-compile rainbow-delimiters smartparens indent-bars dashboard blamer dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "UbuntuMono Nerd Font Mono" :foundry "nil" :slant normal :weight regular :height 180 :width normal)))))
+ '(default ((t (:family "UbuntuMono NF" :foundry "nil" :slant normal :weight regular :height 180 :width normal)))))
 
 
 
@@ -224,8 +256,9 @@
       (while (search-forward from nil t)
         (replace-match to t t)))))
 
-(global-set-key (kbd "M-%") 'entire-buffer-replace)
-
+(global-set-key (kbd "s-%") 'entire-buffer-replace)
+(visual-replace-global-mode 1)
+(global-set-key (kbd "C-c r") 'visual-replace)
 
 ;; ag search
 ;; first one create new window on the right. helm on the bottom, so we use helm.
@@ -372,17 +405,28 @@
 (global-set-key (kbd "<f6>") 'smart-compile)
 
 ;; mode line
-(setq sml/no-confirm-load-theme t)
-(sml/setup)
-(setq sml/theme 'dark)
+(telephone-line-mode 1)
 
 
 ;; auto-revert
 (setq global-auto-revert-mode t)
 
 
-
 ;; auto save  files
 (setq auto-save-file-name-transforms '((".*" "~/.emacs-saves/" t)))
 (setq lock-file-name-transforms '((".*" "~/.emacs-saves/" t)))
 (setq backup-directory-alist '((".*" . "~/.emacs-saves/")))
+
+
+;; theme
+(add-to-list 'custom-theme-load-path (concat user-emacs-directory "/lisp/"))
+(load-theme 'miasma t)
+
+
+;; set mark
+(global-set-key (kbd "<s-SPC>") 'set-mark-command)
+
+
+;; markdownfmt
+(define-key markdown-mode-map (kbd "C-c C-f") #'markdownfmt-format-buffer)
+(put 'list-timers 'disabled nil)
