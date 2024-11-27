@@ -233,7 +233,7 @@
  '(lsp-ui-imenu-auto-refresh 'after-save)
  '(lsp-ui-imenu-buffer-position 'left)
  '(package-selected-packages
-   '(spacegray-theme melancholy-theme visual-replace markdownfmt mistty smart-mode-line git-gutter smart-compile rainbow-delimiters smartparens indent-bars dashboard blamer dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
+   '(outline-indent spacegray-theme melancholy-theme visual-replace markdownfmt mistty smart-mode-line git-gutter smart-compile rainbow-delimiters smartparens indent-bars dashboard blamer dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -378,6 +378,9 @@
 ;; (add-hook 'go-mode-hook #'indent-bars-mode)
 
 
+;; python
+(add-hook 'python-mode-hook #'lsp-deferred)
+
 ;; finally, smartparens
 (require 'smartparens-config)
 (add-hook 'prog-mode-hook #'smartparens-mode)
@@ -420,7 +423,7 @@
 
 ;; theme
 (add-to-list 'custom-theme-load-path (concat user-emacs-directory "/lisp/"))
-(load-theme 'miasma t)
+
 
 
 ;; set mark
@@ -430,3 +433,34 @@
 ;; markdownfmt
 (define-key markdown-mode-map (kbd "C-c C-f") #'markdownfmt-format-buffer)
 (put 'list-timers 'disabled nil)
+
+
+
+;; outline
+(setq outline-indent-ellipsis " ▼ ")
+;; Python
+(add-hook 'python-mode-hook #'outline-indent-minor-mode)
+(add-hook 'python-ts-mode-hook #'outline-indent-minor-mode)
+
+;; YAML
+(add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
+(add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode)
+(add-hook 'go-mode-hook #'outline-indent-minor-mode)
+
+
+;; swith buffer improvment
+(defun jos/switch-to-project-buffer ()
+  "Run `switch-to-buffer' with the projects included as annotations."
+  (interactive)
+  (let ((completion-extra-properties
+         '(:annotation-function (lambda (buffer)
+                                  (concat
+                                   " "
+                                   (with-current-buffer buffer
+                                     (if-let ((proj (project-current)))
+                                         (propertize (project-root proj)
+                                                     'face 'dired-directory)
+                                       "<none>")))))))
+    (call-interactively #'switch-to-buffer)))
+
+(global-set-key (kbd "C-x b") 'jos/switch-to-project-buffer)
