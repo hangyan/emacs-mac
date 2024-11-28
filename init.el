@@ -1,24 +1,8 @@
 ;;; package --- Summary:
 ;;; Commentary: my init file
 ;;; Code:
-;; theme
-;;(add-to-list 'custom-theme-load-path (concat user-emacs-directory "/lisp/"))
+
 (add-to-list 'load-path "~/.emacs.d/elisp/")
-
-
-
-
-(load-file "~/.emacs.d/lisp/basic.el")
-(load-file "~/.emacs.d/lisp/gui.el")
-(load-file "~/.emacs.d/lisp/lsp.el")
-(load-file "~/.emacs.d/lisp/auto-kill-buffers.el")
-(load-file "~/.emacs.d/lisp/spell.el")
-
-
-;; face
-;; Or:
-(require 'company-box)
-(add-hook 'company-mode-hook 'company-box-mode)
 
 
 (require 'package)
@@ -27,12 +11,21 @@
              '("melpa" . "http://melpa.org/packages/") t)
 
 
+(load-file "~/.emacs.d/lisp/basic.el")
+(load-file "~/.emacs.d/lisp/gui.el")
+(load-file "~/.emacs.d/lisp/lsp.el")
+(load-file "~/.emacs.d/lisp/auto-kill-buffers.el")
+(load-file "~/.emacs.d/lisp/spell.el")
+(load-file "~/.emacs.d/lisp/yas.el")
+
+
+;; face
+(require 'company-box)
+(add-hook 'company-mode-hook 'company-box-mode)
 
 ;; go mode test
 (global-set-key (kbd "C-x g t") 'go-test-current-test)
 (global-set-key (kbd "C-x g f") 'go-test-current-file)
-
-
 
 ;; flycheck
 ;; spell check
@@ -84,7 +77,7 @@
  '(lsp-ui-imenu-auto-refresh 'after-save)
  '(lsp-ui-imenu-buffer-position 'left)
  '(package-selected-packages
-   '(outline-indent spacegray-theme melancholy-theme visual-replace markdownfmt mistty smart-mode-line git-gutter smart-compile rainbow-delimiters smartparens indent-bars dashboard blamer dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
+   '(popup yasnippet-snippets outline-indent spacegray-theme melancholy-theme visual-replace markdownfmt mistty smart-mode-line git-gutter smart-compile rainbow-delimiters smartparens indent-bars dashboard blamer dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -94,18 +87,10 @@
  '(default ((t (:family "UbuntuMono NF" :foundry "nil" :slant normal :weight regular :height 180 :width normal)))))
 
 
-
-
-;; indent-bar
-;; (add-hook 'python-mode-hook #'indent-bars-mode)
-;; (add-hook 'go-mode-hook #'indent-bars-mode)
-
-
 ;; finally, smartparens
 (require 'smartparens-config)
 (add-hook 'prog-mode-hook #'smartparens-mode)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-
 
 
 ;; smart compile
@@ -131,11 +116,9 @@
 (telephone-line-mode 1)
 
 
-
 ;; markdownfmt
 (define-key markdown-mode-map (kbd "C-c C-f") #'markdownfmt-format-buffer)
 (put 'list-timers 'disabled nil)
-
 
 
 ;; outline
