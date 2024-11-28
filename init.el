@@ -16,7 +16,8 @@
 (load-file "~/.emacs.d/lisp/basic.el")
 (load-file "~/.emacs.d/lisp/gui.el")
 (load-file "~/.emacs.d/lisp/lsp.el")
-(load-file "~/.emacs.d/lisp/auto-kill-buffers.el")
+;; does it kill lsp buffers?
+;(load-file "~/.emacs.d/lisp/auto-kill-buffers.el")
 (load-file "~/.emacs.d/lisp/spell.el")
 (load-file "~/.emacs.d/lisp/yas.el")
 
@@ -113,10 +114,6 @@
     (emacs-lisp-mode  . (emacs-lisp-byte-compile))))
 
 (global-set-key (kbd "<f6>") 'smart-compile)
-
-;; mode line
-(telephone-line-mode 1)
-
 
 ;; markdownfmt
 (define-key markdown-mode-map (kbd "C-c C-f") #'markdownfmt-format-buffer)

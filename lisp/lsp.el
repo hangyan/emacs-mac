@@ -1,4 +1,4 @@
-;;; package --- Summary:
+;;; lsp.el --- lsp for go/python...:
 ;;; Commentary:
 ;;; Code:
 ;; comments for command
@@ -19,13 +19,10 @@
 ;; Provide instant autocompletion.
 (setq company-idle-delay 0.0)
 
-
-
 ;; go-mode lsp
 (add-hook 'go-mode-hook #'lsp-deferred)
 
-
-					;； go mode rename
+;； go mode rename
 ;; go install golang.org/x/tools/cmd/gorename@latest
 ;; not working, don't know why.
 

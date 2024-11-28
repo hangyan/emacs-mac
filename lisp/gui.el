@@ -1,9 +1,10 @@
+;;; package --- Summary:
+;;; Commentary:
+;;; Code:
 ;; imenu buffer. this global key replaced by lsp-ui
-;; (global-set-key (kbd "C-'") #'imenu-list-smart-toggle) 
+;; (global-set-key (kbd "C-'") #'imenu-list-smart-toggle)
 (setq imenu-list-auto-resize t)
 (setq imenu-list-position 'left)
-
-
 
 ;; windows
 (defun switch-to-minibuffer ()
@@ -21,11 +22,8 @@
 (global-set-key (kbd "M-<left>") 'windmove-left)
 (global-set-key (kbd "M-<right>") 'windmove-right)
 
-	       
-
 ;; column number
 (setq column-number-mode t)
-
 
 ;; supper key
 (setq mac-command-modifier 'meta) ; make cmd key do Meta
@@ -45,4 +43,11 @@
 ;; bookmarks
 (global-set-key (kbd "C-x r l") 'helm-bookmarks)
 
+
+;; Local Variables:
+;; byte-compile-warnings: (not free-vars)
+;; End:
+
+(provide 'gui)
+;;; gui.el ends here
 
