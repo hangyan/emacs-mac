@@ -1,5 +1,5 @@
-;;; package --- Summary
-;;; Commentary:
+;;; package --- Summary:
+;;; Commentary: my init file
 ;;; Code:
 ;; theme
 ;;(add-to-list 'custom-theme-load-path (concat user-emacs-directory "/lisp/"))
