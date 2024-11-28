@@ -1,5 +1,7 @@
-;;; package --- Summary:
-;;; Commentary: my init file.
+;;; init.el --- Summary:
+;;; Commentary:
+;;  my init file.  this file should load other configs first,
+;;  then config language settings.
 ;;; Code:
 
 (add-to-list 'load-path "~/.emacs.d/elisp/")
