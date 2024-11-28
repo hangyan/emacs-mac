@@ -1,5 +1,5 @@
 ;;; package --- Summary:
-;;; Commentary: my init file
+;;; Commentary: my init file.
 ;;; Code:
 
 (add-to-list 'load-path "~/.emacs.d/elisp/")
@@ -132,6 +132,9 @@
 (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode)
 (add-hook 'go-mode-hook #'outline-indent-minor-mode)
 
+;; Local Variables:
+;; byte-compile-warnings: (not free-vars)
+;; End:
 
 (provide 'init)
 ;;; init.el ends here

@@ -1,4 +1,3 @@
-
 ;; imenu buffer. this global key replaced by lsp-ui
 ;; (global-set-key (kbd "C-'") #'imenu-list-smart-toggle) 
 (setq imenu-list-auto-resize t)

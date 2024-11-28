@@ -160,5 +160,9 @@ FROM mark point TO end."
        (setenv "PATH" (concat  "/usr/local/go/bin" ":" (getenv "PATH")))
        ))
 
+;; Local Variables:
+;; byte-compile-warnings: (not free-vars)
+;; End:
+
 (provide 'basic)
 ;;; basic.el ends here

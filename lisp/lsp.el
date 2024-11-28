@@ -1,3 +1,6 @@
+;;; package --- Summary:
+;;; Commentary:
+;;; Code:
 ;; comments for command
 ;; ;; build gopls on mac 13.5, fetch the source code and :
 ;; CGO_ENABLED=1 go build -ldflags '-w -s "-extldflags=-lresolv -L/Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/lib -F/Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/System/Library/Frameworks/" '
@@ -97,5 +100,9 @@
 (add-hook 'python-mode-hook #'lsp-deferred)
 
 
+;; Local Variables:
+;; byte-compile-warnings: (not free-vars)
+;; End:
 
 (provide 'lsp)
+;;; lsp.el ends here
