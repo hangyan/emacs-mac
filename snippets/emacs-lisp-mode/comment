@@ -2,6 +2,7 @@
 # name: elisp comments
 # key: Summ
 # --
-;;; package --- Summary:
+;;; $1.el --- $2:
 ;;; Commentary:
 ;;; Code:
+$0

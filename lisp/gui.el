@@ -44,6 +44,12 @@
 (global-set-key (kbd "C-x r l") 'helm-bookmarks)
 
 
+(use-package modus-themes
+  :ensure t
+  :config
+  (load-theme 'modus-vivendi-tinted :no-confirm-loading))
+
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars)
 ;; End:
