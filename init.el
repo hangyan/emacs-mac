@@ -41,7 +41,12 @@
 
 ;; flycheck
 ;; spell check
-(add-hook 'after-init-hook #'global-flycheck-mode)
+;; (add-hook 'after-init-hook #'global-flycheck-mode)
+(use-package flycheck
+  :ensure t
+  :config (global-flycheck-mode)
+  (with-eval-after-load 'flycheck
+    (setq-default flycheck-disabled-checkers '(yaml-yamllint))))
 (add-to-list 'display-buffer-alist
              `(,(rx bos "*Flycheck errors*" eos)
               (display-buffer-reuse-window
@@ -148,7 +153,7 @@
             (unless (or (null position) (null name)
                         (string= (car imenu--rescan-item) name))
               (add-to-list 'symbol-names name)
-              (add-to-list 'name-and-pos (cons name position))))))))    
+              (add-to-list 'name-and-pos (cons name position))))))))
 
 (global-set-key (kbd "C-c i") 'ido-goto-symbol)
 
@@ -157,6 +162,9 @@
 (setq ido-enable-flex-matching t)
 (setq ido-case-fold t)
 (setq ido-use-virtual-buffers t)
+(setq ido-everywhere t)
+;; (ido-mode t)
+
 
 ;; kubernetes
 (keymap-global-set "C-c k" 'kubed-prefix-map)
