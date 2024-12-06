@@ -43,6 +43,15 @@
 ;; bookmarks
 (global-set-key (kbd "C-x r l") 'helm-bookmarks)
 
+;; imenu
+
+(add-hook 'markdown-mode-hook (lambda () (setq-local imenu-auto-rescan t)))
+(add-hook 'makefile-mode-hook (lambda () (setq-local imenu-auto-rescan t)))
+(add-hook 'prog-mode-hook
+      (lambda ()
+        (setq-local imenu-auto-rescan t)
+        (setq-local imenu-sort-function #'imenu--sort-by-name)))
+
 
 (use-package modus-themes
   :ensure t

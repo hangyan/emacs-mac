@@ -13,7 +13,7 @@
  '(lsp-ui-imenu-auto-refresh 'after-save)
  '(lsp-ui-imenu-buffer-position 'left)
  '(package-selected-packages
-   '(modus-themes popup yasnippet-snippets outline-indent spacegray-theme melancholy-theme visual-replace markdownfmt mistty smart-mode-line git-gutter smart-compile rainbow-delimiters smartparens indent-bars dashboard blamer dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
+   '(kubed modus-themes popup yasnippet-snippets outline-indent spacegray-theme melancholy-theme visual-replace markdownfmt mistty smart-mode-line git-gutter smart-compile rainbow-delimiters smartparens indent-bars dashboard blamer dockerfile-mode helm-ag dired-sidebar treemacs yaml-mode gotest symbol-overlay highlight-symbol imenu-list yasnippet ag flycheck company go-mode exec-path-from-shell helm))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

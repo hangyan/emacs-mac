@@ -1,4 +1,4 @@
-;;; init.el --- Summary:
+;;; init.el --- my init file config:
 ;;; Commentary:
 ;;  my init file.  this file should load other configs first,
 ;;  then config language settings.
@@ -101,17 +101,66 @@
 (define-key markdown-mode-map (kbd "C-c C-f") #'markdownfmt-format-buffer)
 (put 'list-timers 'disabled nil)
 
+;; ido imenu
+(defun ido-goto-symbol (&optional symbol-list)
+      "Refresh imenu and jump to a place in the buffer using Ido."
+      (interactive)
+      (unless (featurep 'imenu)
+        (require 'imenu nil t))
+      (cond
+       ((not symbol-list)
+        (let ((ido-mode ido-mode)
+              (ido-enable-flex-matching
+               (if (boundp 'ido-enable-flex-matching)
+                   ido-enable-flex-matching t))
+              name-and-pos symbol-names position)
+          (unless ido-mode
+            (ido-mode 1)
+            (setq ido-enable-flex-matching t))
+          (while (progn
+                   (imenu--cleanup)
+                   (setq imenu--index-alist nil)
+                   (ido-goto-symbol (imenu--make-index-alist))
+                   (setq selected-symbol
+                         (ido-completing-read "Symbol? " symbol-names))
+                   (string= (car imenu--rescan-item) selected-symbol)))
+          (unless (and (boundp 'mark-active) mark-active)
+            (push-mark nil t nil))
+          (setq position (cdr (assoc selected-symbol name-and-pos)))
+          (cond
+           ((overlayp position)
+            (goto-char (overlay-start position)))
+           (t
+            (goto-char position)))))
+       ((listp symbol-list)
+        (dolist (symbol symbol-list)
+          (let (name position)
+            (cond
+             ((and (listp symbol) (imenu--subalist-p symbol))
+              (ido-goto-symbol symbol))
+             ((listp symbol)
+              (setq name (car symbol))
+              (setq position (cdr symbol)))
+             ((stringp symbol)
+              (setq name symbol)
+              (setq position
+                    (get-text-property 1 'org-imenu-marker symbol))))
+            (unless (or (null position) (null name)
+                        (string= (car imenu--rescan-item) name))
+              (add-to-list 'symbol-names name)
+              (add-to-list 'name-and-pos (cons name position))))))))    
 
-;; outline
-(setq outline-indent-ellipsis " ▼ ")
-;; Python
-(add-hook 'python-mode-hook #'outline-indent-minor-mode)
-(add-hook 'python-ts-mode-hook #'outline-indent-minor-mode)
+(global-set-key (kbd "C-c i") 'ido-goto-symbol)
 
-;; YAML
-(add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
-(add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode)
-(add-hook 'go-mode-hook #'outline-indent-minor-mode)
+
+;; ido
+(setq ido-enable-flex-matching t)
+(setq ido-case-fold t)
+(setq ido-use-virtual-buffers t)
+
+;; kubernetes
+(keymap-global-set "C-c k" 'kubed-prefix-map)
+;; (kubed-menu-bar-mode)
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars)

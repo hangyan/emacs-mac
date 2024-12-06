@@ -242,13 +242,13 @@ FROM mark point TO end."
        (setenv "PATH" (mapconcat #'identity exec-path path-separator)))
       ((eq system-type 'darwin)
        ;; mac-specific code goes here.
-       (setenv "GOROOT" "/usr/local/go/")
+       (setenv "GOROOT" "/usr/local/Cellar/go/1.23.3/libexec/")
        (setenv "GOPATH" "/Users/yayu/Golang")
 
        (add-to-list 'exec-path "~/Golang/bin")
        (if (file-exists-p "~/.go.env")
 	   (load-env-vars "~/.go.env"))
-       (setenv "PATH" (concat  "/usr/local/go/bin" ":" (getenv "PATH")))
+       (setenv "PATH" (concat  "/usr/local/Cellar/go/1.23.3/libexec/bin" ":" (getenv "PATH")))
        ))
 
 ;; Local Variables:
