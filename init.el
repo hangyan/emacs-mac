@@ -10,6 +10,9 @@
 (load custom-file :no-error-if-file-is-missing)
 
 
+;; use package settings
+(setq use-package-enable-imenu-support t)
+
 (require 'package)
 (package-initialize)
 (add-to-list 'package-archives
@@ -165,6 +168,10 @@
 (setq ido-everywhere t)
 ;; (ido-mode t)
 
+
+
+;; undo, fuck i never want to minilize my window
+(global-set-key (kbd "C-z") 'undo)
 
 ;; kubernetes
 (keymap-global-set "C-c k" 'kubed-prefix-map)

@@ -5,6 +5,9 @@
 ;;; Code:
 
 
+(setq use-package-compute-statistics t)
+
+
 ;; Prefer loading newer compiled files
 (setq load-prefer-newer t)
 

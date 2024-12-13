@@ -52,13 +52,6 @@
         (setq-local imenu-auto-rescan t)
         (setq-local imenu-sort-function #'imenu--sort-by-name)))
 
-
-(use-package modus-themes
-  :ensure t
-  :config
-  (load-theme 'modus-vivendi-tinted :no-confirm-loading))
-
-
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars)
 ;; End:
