@@ -9,6 +9,14 @@
 (setq custom-file (locate-user-emacs-file "custom.el"))
 (load custom-file :no-error-if-file-is-missing)
 
+;; for windows to use, set $HOME env for user first
+(setq custom-file
+       (expand-file-name (concat "~/.emacs.d/"
+                                 (if (eq system-type 'windows-nt)
+                                     "win-"
+                                   "")
+                                 "custom.el")))
+(load custom-file t)
 
 ;; use package settings
 (setq use-package-enable-imenu-support t)
