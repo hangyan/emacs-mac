@@ -252,6 +252,14 @@ FROM mark point TO end."
        (setenv "PATH" (concat  "/usr/local/Cellar/go/1.23.3/libexec/bin" ":" (getenv "PATH")))
        ))
 
+
+;; flycheck
+;; (use-package flycheck
+;;   :ensure t
+;;   :config
+;;   (add-hook 'after-init-hook #'global-flycheck-mode))
+
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars)
 ;; End:
