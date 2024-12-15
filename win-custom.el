@@ -13,11 +13,11 @@
  '(lsp-ui-imenu-auto-refresh 'after-save)
  '(lsp-ui-imenu-buffer-position 'left)
  '(package-selected-packages
-   '(ag blamer company-box dashboard-hackernews deft diff-hl dired-sidebar dockerfile-mode doom-modeline exec-path-from-shell flycheck git-gutter go-mode gotest hackernews helm-core highlight-symbol imenu-list indent-bars indent-guide ivy kubed load-env-vars lsp-treemacs lsp-ui marginalia markdownfmt md4rd melancholy-theme mistty modus-themes mood-line orderless outline-indent popup rainbow-delimiters smart-compile smart-mode-line smartparens sml-mode spacegray-theme symbol-overlay telephone-line trashed vertico visual-replace wfnames yaml-mode yasnippet-snippets))
+   '(yasnippet helm lsp-mode dashboard dired-subtree markdown-mode ag blamer company-box dashboard-hackernews deft diff-hl dired-sidebar dockerfile-mode doom-modeline exec-path-from-shell flycheck git-gutter go-mode gotest hackernews helm-core highlight-symbol imenu-list indent-bars indent-guide ivy kubed load-env-vars lsp-treemacs lsp-ui marginalia markdownfmt md4rd melancholy-theme mistty modus-themes mood-line orderless outline-indent popup rainbow-delimiters smart-compile smart-mode-line smartparens sml-mode spacegray-theme symbol-overlay telephone-line trashed vertico visual-replace wfnames yaml-mode yasnippet-snippets))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Cascadia Mono" :foundry "outline" :slant normal :weight regular :height 181 :width normal)))))
+ '(default ((t (:family "Intel One Mono" :foundry "nil" :slant normal :weight regular :height 180 :width normal)))))

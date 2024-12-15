@@ -123,11 +123,14 @@ FROM mark point TO end."
 
 
 ;; ag search
-;; first one create new window on the right. helm on the bottom, so we use helm.
-(setq ag-highlight-search t)
-(setq ag-reuse-buffers 't)
-(global-set-key (kbd "C-c s") 'ag-project-regexp)
-;; (global-set-key (kbd "C-c s") 'helm-grep-do-git-grep)
+(cond
+ ((eq system-type 'windows-nt)
+  (global-set-key (kbd "C-c s") 'helm-grep-do-git-grep))
+ ((eq system-type 'darwin) ; macOS
+  (setq ag-highlight-search t)
+  (setq ag-reuse-buffers 't)
+  (global-set-key (kbd "C-c s") 'ag-project-regexp)))
+
 
 
 
@@ -176,6 +179,7 @@ FROM mark point TO end."
     (call-interactively #'switch-to-buffer)))
 
 (global-set-key (kbd "C-x b") 'jos/switch-to-project-buffer)
+(global-set-key (kbd "C-x C-b") 'helm-recentf)
 
 ;; dired imrpovement
 (use-package dired
@@ -229,10 +233,7 @@ FROM mark point TO end."
 
 (cond ((eq system-type 'windows-nt)
         ;; Windows-specific code goes here.
-       (add-to-list 'exec-path
-		    "c:/Users/win/AppData/Roaming/Python/Python310/Scripts")
        (add-to-list 'exec-path "c:/Program Files/Git/bin")
-       (add-to-list 'exec-path "c:/Python310/Scripts")
        (add-to-list 'exec-path "c:/ProgramData/chocolatey/bin")
        (add-to-list 'exec-path "c:/Users/win/AppData/Local/Microsoft/WindowsApps")
        (setenv "GOROOT" "c:/Program Files/Go")

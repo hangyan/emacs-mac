@@ -33,7 +33,9 @@
 
 ;; git blamer / git gutter
 (global-set-key (kbd "C-c i") 'blamer-show-commit-info)
-(global-git-gutter-mode +1)
+(cond
+ ((eq system-type 'darwin) ; macOS
+  (global-git-gutter-mode +1)))
 
 ;; dashboard
 (require 'dashboard)
@@ -51,6 +53,20 @@
       (lambda ()
         (setq-local imenu-auto-rescan t)
         (setq-local imenu-sort-function #'imenu--sort-by-name)))
+
+;; set font here to avoid os custom crap
+;; set default font
+(cond
+ ((eq system-type 'windows-nt)
+  (when (member "Consolas" (font-family-list))
+    (set-frame-font "Consolas-14" t t)))
+ ((eq system-type 'darwin) ; macOS
+  (when (member "Menlo" (font-family-list))
+    (set-frame-font "Menlo" t t)))
+ ((eq system-type 'gnu/linux)
+  (when (member "DejaVu Sans Mono" (font-family-list))
+    (set-frame-font "DejaVu Sans Mono" t t))))
+
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars)

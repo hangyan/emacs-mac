@@ -6,9 +6,6 @@
 
 (add-to-list 'load-path "~/.emacs.d/elisp/")
 
-(setq custom-file (locate-user-emacs-file "custom.el"))
-(load custom-file :no-error-if-file-is-missing)
-
 ;; for windows to use, set $HOME env for user first
 (setq custom-file
        (expand-file-name (concat "~/.emacs.d/"
@@ -16,7 +13,7 @@
                                      "win-"
                                    "")
                                  "custom.el")))
-(load custom-file t)
+(load custom-file :no-error-if-file-is-missing)
 
 ;; use package settings
 (setq use-package-enable-imenu-support t)
@@ -35,7 +32,15 @@
 
 (load-file "~/.emacs.d/lisp/basic.el")
 (load-file "~/.emacs.d/lisp/gui.el")
-(load-file "~/.emacs.d/lisp/lsp.el")
+
+(cond
+ ((eq system-type 'darwin)
+  (progn
+  (load-file "~/.emacs.d/lisp/lsp.el")  ))
+ (t
+  (progn
+    (message "skip loadding lsp for now."))))
+
 ;; does it kill lsp buffers?
 ;(load-file "~/.emacs.d/lisp/auto-kill-buffers.el")
 (load-file "~/.emacs.d/lisp/spell.el")
