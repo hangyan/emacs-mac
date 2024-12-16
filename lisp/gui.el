@@ -61,8 +61,8 @@
   (when (member "Consolas" (font-family-list))
     (set-frame-font "Consolas-14" t t)))
  ((eq system-type 'darwin) ; macOS
-  (when (member "Menlo" (font-family-list))
-    (set-frame-font "Menlo" t t)))
+  (when (member "Intel One Mono" (font-family-list))
+    (set-frame-font "Intel One Mono" t t)))
  ((eq system-type 'gnu/linux)
   (when (member "DejaVu Sans Mono" (font-family-list))
     (set-frame-font "DejaVu Sans Mono" t t))))
