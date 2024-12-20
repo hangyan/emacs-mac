@@ -53,7 +53,7 @@
         (setq-local imenu-auto-rescan t)
         (setq-local imenu-sort-function #'imenu--sort-by-name)))
 
-(global-set-key (kbd "M-g i") 'helm-imenu)
+
 
 
 
