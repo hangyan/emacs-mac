@@ -132,7 +132,25 @@ FROM mark point TO end."
   (global-set-key (kbd "C-c s") 'ag-project-regexp)))
 
 
+;;  open-line with indent
+(defun my-open-line-and-indent (n)
+  "Like `newline-and-indent' for the `open-line' command."
+  (interactive "*p")
+  (let ((eol (copy-marker (line-end-position))))
+    (open-line n)
+    (indent-region (point) eol)
+    (set-marker eol nil)))
 
+(global-set-key (kbd "C-o") 'my-open-line-and-indent)
+
+
+;; highlight symbol
+(use-package auto-highlight-symbol
+  ; this only installs it for programming mode derivatives; you can also make it global...
+  :init (add-hook 'prog-mode-hook 'highlight-symbol-mode)
+  :bind (:map auto-highlight-symbol-mode-map
+              ("M-p" . ahs-backward)
+              ("M-n" . ahs-forward)))
 
 
 ;; mac dired ls
@@ -164,22 +182,12 @@ FROM mark point TO end."
 
 
 ;; swith buffer improvment
-(defun jos/switch-to-project-buffer ()
-  "Run `switch-to-buffer' with the projects included as annotations."
-  (interactive)
-  (let ((completion-extra-properties
-         '(:annotation-function (lambda (buffer)
-                                  (concat
-                                   " "
-                                   (with-current-buffer buffer
-                                     (if-let ((proj (project-current)))
-                                         (propertize (project-root proj)
-                                                     'face 'dired-directory)
-                                       "<none>")))))))
-    (call-interactively #'switch-to-buffer)))
+(use-package helm
+  :config
+  (global-set-key (kbd "C-x b") 'helm-buffers-list)
+  (global-set-key (kbd "C-x C-b") 'helm-recentf))
 
-(global-set-key (kbd "C-x b") 'jos/switch-to-project-buffer)
-(global-set-key (kbd "C-x C-b") 'helm-recentf)
+
 
 ;; dired imrpovement
 (use-package dired

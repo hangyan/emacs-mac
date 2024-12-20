@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(company-tooltip-align-annotations t)
- '(custom-enabled-themes '(tango-dark))
+ '(custom-enabled-themes '(leuven-dark))
  '(custom-safe-themes
    '("e452b385e3f9cb05603fef58f3d65f73774137943fd75e6281dab3ff385851b9"
      "fdaf036ac62069f9b785ad2486b8106fb704b7c898d73ff7f66dc657523349d3"
@@ -16,16 +16,19 @@
  '(lsp-ui-imenu-auto-refresh 'after-save)
  '(lsp-ui-imenu-buffer-position 'left)
  '(package-selected-packages
-   '(ag blamer company-box dashboard-hackernews deft diff-hl
+   '(ag blamer company-box copilot dashboard-hackernews deft diff-hl
 	dired-sidebar dockerfile-mode doom-modeline
 	exec-path-from-shell flycheck git-gutter go-mode gotest
-	hackernews helm-core highlight-symbol imenu-list indent-bars
-	indent-guide ivy kubed load-env-vars lsp-treemacs lsp-ui
-	marginalia markdownfmt md4rd melancholy-theme mistty
+	hackernews helm helm-core highlight-symbol imenu-list
+	indent-bars indent-guide ivy kubed load-env-vars lsp-treemacs
+	lsp-ui marginalia markdownfmt md4rd melancholy-theme mistty
 	modus-themes mood-line orderless outline-indent popup
 	rainbow-delimiters smart-compile smart-mode-line smartparens
 	sml-mode spacegray-theme symbol-overlay telephone-line trashed
 	vertico visual-replace wfnames yaml-mode yasnippet-snippets))
+ '(package-vc-selected-packages
+   '((copilot :url "https://github.com/copilot-emacs/copilot.el" :branch
+	      "main")))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

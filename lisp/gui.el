@@ -43,16 +43,19 @@
 ;; (setq dashboard-items '((hackernews . 10)))
 
 ;; bookmarks
-(global-set-key (kbd "C-x r l") 'helm-bookmarks)
+(global-set-key (kbd "C-x r l") 'list-bookmarks)
 
 ;; imenu
-
 (add-hook 'markdown-mode-hook (lambda () (setq-local imenu-auto-rescan t)))
 (add-hook 'makefile-mode-hook (lambda () (setq-local imenu-auto-rescan t)))
 (add-hook 'prog-mode-hook
       (lambda ()
         (setq-local imenu-auto-rescan t)
         (setq-local imenu-sort-function #'imenu--sort-by-name)))
+
+(global-set-key (kbd "M-g i") 'helm-imenu)
+
+
 
 ;; set font here to avoid os custom crap
 ;; set default font

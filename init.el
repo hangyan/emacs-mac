@@ -181,6 +181,8 @@
 (setq ido-everywhere t)
 ;; (ido-mode t)
 
+;; yes or now questions
+(fset 'yes-or-no-p 'y-or-n-p)  ;; Ask for y/n instead of yes/no
 
 
 ;; undo, fuck i never want to minilize my window
@@ -189,6 +191,14 @@
 ;; kubernetes
 (keymap-global-set "C-c k" 'kubed-prefix-map)
 ;; (kubed-menu-bar-mode)
+
+
+;; github copiot
+;; (use-package copilot
+;;   :vc (:url "https://github.com/copilot-emacs/copilot.el"
+;;             :rev :newest
+;;             :branch "main"))
+;; (add-hook 'prog-mode-hook 'copilot-mode)
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars)
