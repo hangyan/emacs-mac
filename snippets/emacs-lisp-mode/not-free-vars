@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: not-free-vars
+# key: nfv
+# --
+;; Local Variables:
+;; byte-compile-warnings: (not free-vars)
+;; End:

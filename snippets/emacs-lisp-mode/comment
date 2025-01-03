@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: elisp comments
+# key: Summ
+# --
+;;; $1.el --- $2:
+;;; Commentary:
+;;; Code:
+$0
