@@ -8,7 +8,6 @@
   (set-mark (line-end-position))
   (activate-mark))
 
-(global-set-key (kbd "C-x n f") 'mark-from-point-to-end-of-line)
 
 
 ;; link: https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
@@ -41,7 +40,7 @@ The DWIM behaviour of this command is as follows:
    (t
     (keyboard-quit))))
 
-(define-key global-map (kbd "C-g") #'prot/keyboard-quit-dwim)
+
 
 
 ;; vertical minibuffer promt / fuzzy match
@@ -86,10 +85,7 @@ The DWIM behaviour of this command is as follows:
   (interactive)
   (save-excursion
     (copy-region-as-kill (point) (progn (backward-word) (point)))))
-(global-set-key (kbd "C-x n c") 'backward-copy-word)
 
-;; set mark
-(global-set-key (kbd "<s-SPC>") 'set-mark-command)
 
 
 ;; full path
@@ -117,19 +113,8 @@ FROM mark point TO end."
       (while (search-forward from nil t)
         (replace-match to t t)))))
 
-(global-set-key (kbd "s-%") 'entire-buffer-replace)
+
 (visual-replace-global-mode 1)
-(global-set-key (kbd "C-c r") 'visual-replace)
-
-
-;; ag search
-(cond
- ((eq system-type 'windows-nt)
-  (global-set-key (kbd "C-c s") 'helm-grep-do-git-grep))
- ((eq system-type 'darwin) ; macOS
-  (setq ag-highlight-search t)
-  (setq ag-reuse-buffers 't)
-  (global-set-key (kbd "C-c s") 'ag-project-regexp)))
 
 
 ;;  open-line with indent
@@ -141,34 +126,8 @@ FROM mark point TO end."
     (indent-region (point) eol)
     (set-marker eol nil)))
 
-(global-set-key (kbd "C-o") 'my-open-line-and-indent)
-
-
-;; highlight symbol
-(use-package auto-highlight-symbol
-  ; this only installs it for programming mode derivatives; you can also make it global...
-  :init (add-hook 'prog-mode-hook 'highlight-symbol-mode)
-  :bind (:map auto-highlight-symbol-mode-map
-              ("M-p" . ahs-backward)
-              ("M-n" . ahs-forward)))
-
-
-;; mac dired ls
-(when (string= system-type "darwin")
-  (setq dired-use-ls-dired nil))
-
-;; dired sidebar
-(global-set-key (kbd "C-x C-n") 'dired-sidebar-toggle-sidebar)
-
-
-
 ;; symbol
 (require 'symbol-overlay)
-(global-set-key (kbd "M-i") 'symbol-overlay-put)
-(global-set-key (kbd "M-n") 'symbol-overlay-jump-next)
-(global-set-key (kbd "M-p") 'symbol-overlay-jump-prev)
-(global-set-key (kbd "<f7>") 'symbol-overlay-mode)
-(global-set-key (kbd "<f8>") 'symbol-overlay-remove-all)
 
 
 ;; auto-revert

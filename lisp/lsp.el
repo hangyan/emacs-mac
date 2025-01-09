@@ -54,8 +54,7 @@
 (lsp-treemacs-sync-mode 1)
 (setq treemacs-project-follow-mode t)
 (setq treemacs-display-current-project-exclusively t)
-(global-set-key (kbd "C-'") 'lsp-treemacs-symbols)
-(global-set-key (kbd "<f5>") 'treemacs)
+
 (setq treemacs-filewatch-mode t)
 (setq treemacs-git-mode 'simple)
 (setq treemacs-git-commit-diff-mode t)
@@ -93,9 +92,6 @@
 (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
 
 
-
-;; python
-(add-hook 'python-mode-hook #'lsp-deferred)
 
 
 ;; Local Variables:

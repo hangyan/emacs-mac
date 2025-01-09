@@ -5,6 +5,7 @@
 ;;; Code:
 
 (add-to-list 'load-path "~/.emacs.d/elisp/")
+(add-to-list 'load-path "~/.emacs.d/3rd/")
 
 ;; for windows to use, set $HOME env for user first
 (setq custom-file
@@ -45,15 +46,13 @@
 ;(load-file "~/.emacs.d/lisp/auto-kill-buffers.el")
 (load-file "~/.emacs.d/lisp/spell.el")
 (load-file "~/.emacs.d/lisp/yas.el")
+(load-file "~/.emacs.d/lisp/python.el")
+(load-file "~/.emacs.d/lisp/keys.el")
 
 
 ;; face
 (require 'company-box)
 (add-hook 'company-mode-hook 'company-box-mode)
-
-;; go mode test
-(global-set-key (kbd "C-x g t") 'go-test-current-test)
-(global-set-key (kbd "C-x g f") 'go-test-current-file)
 
 ;; flycheck
 ;; spell check
@@ -79,7 +78,7 @@
 
 (recentf-mode 1)
 (setq-default recent-save-file "~/.emacs.d/recentf")
-(global-set-key (kbd "s-b") 'recentf-open)
+
 
 ;; finally, smartparens
 (require 'smartparens-config)
@@ -104,7 +103,6 @@
     ("\\.yaml$" . "kubectl apply -f %f")
     (emacs-lisp-mode  . (emacs-lisp-byte-compile))))
 
-(global-set-key (kbd "<f6>") 'smart-compile)
 
 ;; markdownfmt
 (define-key markdown-mode-map (kbd "C-c C-f") #'markdownfmt-format-buffer)
@@ -159,7 +157,7 @@
               (add-to-list 'symbol-names name)
               (add-to-list 'name-and-pos (cons name position))))))))
 
-(global-set-key (kbd "C-c i") 'ido-goto-symbol)
+
 
 
 ;; ido
@@ -173,12 +171,27 @@
 (fset 'yes-or-no-p 'y-or-n-p)  ;; Ask for y/n instead of yes/no
 
 
-;; undo, fuck i never want to minilize my window
-(global-set-key (kbd "C-z") 'undo)
+;; highlight current symbol
+(use-package auto-highlight-symbol
+  ; this only installs it for programming mode derivatives; you can also make it global...
+  :init (add-hook 'prog-mode-hook 'highlight-symbol-mode)
+  :bind (:map auto-highlight-symbol-mode-map
+              ("M-p" . ahs-backward)
+              ("M-n" . ahs-forward)))
 
-;; kubernetes
-(keymap-global-set "C-c k" 'kubed-prefix-map)
-;; (kubed-menu-bar-mode)
+(load-file "~/.emacs.d/3rd/hl-todo.el")
+;; highlight TODO...
+(use-package hl-todo
+    :hook (prog-mode . hl-todo-mode)
+    :config
+    (setq hl-todo-highlight-punctuation ":"
+          hl-todo-keyword-faces
+          `(("TODO"       warning bold)
+            ("FIXME"      error bold)
+            ("HACK"       font-lock-constant-face bold)
+            ("REVIEW"     font-lock-keyword-face bold)
+            ("NOTE"       success bold)
+            ("DEPRECATED" font-lock-doc-face bold))))
 
 
 ;; github copiot

@@ -19,13 +19,14 @@
    '(ag blamer company-box copilot dashboard-hackernews deft diff-hl
 	dired-sidebar dockerfile-mode doom-modeline
 	exec-path-from-shell expand-region flycheck git-gutter go-mode
-	gotest hackernews helm helm-core highlight-symbol imenu-list
-	indent-bars indent-guide ivy kubed load-env-vars lsp-treemacs
-	lsp-ui marginalia markdownfmt md4rd melancholy-theme mistty
-	modus-themes mood-line orderless outline-indent popup
-	rainbow-delimiters smart-compile smart-mode-line smartparens
-	sml-mode spacegray-theme symbol-overlay telephone-line trashed
-	vertico visual-replace wfnames yaml-mode yasnippet-snippets))
+	gotest hackernews helm helm-core highlight-symbol hl-todo
+	imenu-list indent-bars indent-guide ivy kubed load-env-vars
+	lsp-treemacs lsp-ui marginalia markdownfmt md4rd
+	melancholy-theme mistty modus-themes mood-line orderless
+	outline-indent popup python-black rainbow-delimiters
+	smart-compile smart-mode-line smartparens sml-mode
+	spacegray-theme symbol-overlay telephone-line trashed vertico
+	visual-replace wfnames yaml-mode yasnippet-snippets))
  '(package-vc-selected-packages
    '((copilot :url "https://github.com/copilot-emacs/copilot.el" :branch
 	      "main")))

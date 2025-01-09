@@ -26,3 +26,7 @@
 (setq yas/prompt-functions '(yas/popup-isearch-prompt yas/no-prompt))
 
 
+(provide 'yas)
+;;; yas.el ends here
+
+
