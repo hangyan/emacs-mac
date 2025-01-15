@@ -24,6 +24,10 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
 
+(dolist (package '(use-package))
+   (unless (package-installed-p package)
+       (package-install package)))
+
 ;; disable warning logs during package install
 (add-to-list 'display-buffer-alist
              '("\\`\\*\\(Warnings\\|Compile-Log\\)\\*\\'"
@@ -192,6 +196,34 @@
             ("REVIEW"     font-lock-keyword-face bold)
             ("NOTE"       success bold)
             ("DEPRECATED" font-lock-doc-face bold))))
+
+(use-package rg
+  :ensure t
+  :config
+  (rg-define-search my/rg-project
+    "Search for any files in project or current directory"
+    :query ask
+    :format literal
+    :confirm prefix
+    :files "everything"
+    :flags ("--hidden -g !.git")
+    :dir (if (vc-root-dir)
+             (vc-root-dir)
+           default-directory))
+  
+  (rg-define-search my-rg-todo
+    :query "(TODO|FIXME)"
+    :format regexp
+    :dir current
+    :files current)
+  :bind
+  (("C-x p g" . rg-project)
+   ("C-x p t" . my-rg-todo)
+  ("M-SPC" . my/rg-project)))
+    
+
+
+
 
 
 ;; github copiot
