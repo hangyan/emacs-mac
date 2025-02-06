@@ -54,7 +54,7 @@
   (global-set-key (kbd "C-c s") 'ag-project-regexp)))
 
 (global-set-key (kbd "C-c r") 'visual-replace)
-(global-set-key (kbd "C-c i") 'ido-goto-symbol)
+(global-set-key (kbd "C-c i") 'helm-imenu)
 ;; kubernetes
 (keymap-global-set "C-c k" 'kubed-prefix-map)
 ;; (kubed-menu-bar-mode)

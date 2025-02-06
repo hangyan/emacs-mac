@@ -52,6 +52,7 @@
 (load-file "~/.emacs.d/lisp/yas.el")
 (load-file "~/.emacs.d/lisp/python.el")
 (load-file "~/.emacs.d/lisp/keys.el")
+(load-file "~/.emacs.d/lisp/helm.el")
 
 
 ;; face
