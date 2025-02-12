@@ -37,6 +37,7 @@
 
 (load-file "~/.emacs.d/lisp/basic.el")
 (load-file "~/.emacs.d/lisp/gui.el")
+(load-file "~/.emacs.d/lisp/tabline.el")
 
 (cond
  ((eq system-type 'darwin)

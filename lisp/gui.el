@@ -37,16 +37,16 @@
         (setq-local imenu-sort-function #'imenu--sort-by-name)))
 
 
-(use-package tab-line
-  :demand t
-  :bind
-  (("C-<iso-lefttab>" . tab-line-switch-to-prev-tab)
-   ("C-<tab>" . tab-line-switch-to-next-tab))
-  :config
-  (global-tab-line-mode 1)
-  (setq
-   tab-line-new-button-show nil
-   tab-line-close-button-show nil))
+;; (use-package tab-line
+;;   :demand t
+;;   :bind
+;;   (("C-<iso-lefttab>" . tab-line-switch-to-prev-tab)
+;;    ("C-<tab>" . tab-line-switch-to-next-tab))
+;;   :config
+;;   (global-tab-line-mode 1)
+;;   (setq
+;;    tab-line-new-button-show nil
+;;    tab-line-close-button-show nil))
 
 
 ;; set font here to avoid os custom crap
