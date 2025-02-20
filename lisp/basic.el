@@ -236,6 +236,15 @@ FROM mark point TO end."
 ;;   (add-hook 'after-init-hook #'global-flycheck-mode))
 
 
+;; buffer cleanup
+(use-package buffer-terminator
+  :ensure t
+  :custom
+  (buffer-terminator-verbose nil)
+  (buffer-terminator-verbose t)
+  :config
+  (buffer-terminator-mode 1))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars)
 ;; End:

@@ -13,11 +13,12 @@
      default))
  '(git-gutter:update-interval 2)
  '(global-display-line-numbers-mode t)
+ '(helm-command-prefix-key "C-;")
  '(lsp-ui-imenu-auto-refresh 'after-save)
  '(lsp-ui-imenu-buffer-position 'left)
  '(package-selected-packages
-   '(ag blamer company-box copilot dashboard-hackernews deft diff-hl
-	dired-sidebar dockerfile-mode doom-modeline
+   '(ag blamer buffer-terminator company-box copilot dashboard-hackernews
+	deft diff-hl dired-sidebar dockerfile-mode doom-modeline
 	exec-path-from-shell expand-region flycheck flycheck-hl-todo
 	git-gutter go-mode gotest hackernews helm helm-core
 	highlight-symbol hl-todo imenu-list indent-bars indent-guide
