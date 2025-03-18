@@ -96,7 +96,7 @@ The DWIM behaviour of this command is as follows:
 
 (setq inhibit-startup-message t)
 (scroll-bar-mode -1)
-(tool-bar-mode -1)
+;; (tool-bar-mode -1)
 
 (setq mac-command-modifier 'meta)
 
@@ -215,13 +215,13 @@ FROM mark point TO end."
        (setenv "PATH" (mapconcat #'identity exec-path path-separator)))
       ((eq system-type 'darwin)
        ;; mac-specific code goes here.
-       (setenv "GOROOT" "/usr/local/Cellar/go/1.23.3/libexec/")
+       (setenv "GOROOT" "/usr/local/Cellar/go/1.24.1/libexec/")
        (setenv "GOPATH" "/Users/yayu/Golang")
 
        (add-to-list 'exec-path "~/Golang/bin")
        (if (file-exists-p "~/.go.env")
 	   (load-env-vars "~/.go.env"))
-       (setenv "PATH" (concat  "/usr/local/Cellar/go/1.23.3/libexec/bin" ":" (getenv "PATH")))
+       (setenv "PATH" (concat  "/usr/local/Cellar/go/1.24.1/libexec/bin" ":" (getenv "PATH")))
        ))
 
 

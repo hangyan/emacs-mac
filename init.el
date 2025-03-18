@@ -165,6 +165,9 @@
 
 
 
+;; dumb-jump
+(add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+
 
 ;; ido
 (setq ido-enable-flex-matching t)
