@@ -52,7 +52,7 @@
 ;(load-file "~/.emacs.d/lisp/auto-kill-buffers.el")
 (load-file "~/.emacs.d/lisp/spell.el")
 ;; for performance.
-;; (load-file "~/.emacs.d/lisp/yas.el") 
+;; (load-file "~/.emacs.d/lisp/yas.el")
 (load-file "~/.emacs.d/lisp/python.el")
 (load-file "~/.emacs.d/lisp/keys.el")
 (load-file "~/.emacs.d/lisp/helm.el")

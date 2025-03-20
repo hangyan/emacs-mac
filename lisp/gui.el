@@ -25,7 +25,6 @@
 ;; dashboard
 (require 'dashboard)
 (dashboard-setup-startup-hook)
-;; (setq dashboard-items '((hackernews . 10)))
 
 
 ;; imenu
@@ -37,18 +36,6 @@
         (setq-local imenu-sort-function #'imenu--sort-by-name)))
 
 
-;; (use-package tab-line
-;;   :demand t
-;;   :bind
-;;   (("C-<iso-lefttab>" . tab-line-switch-to-prev-tab)
-;;    ("C-<tab>" . tab-line-switch-to-next-tab))
-;;   :config
-;;   (global-tab-line-mode 1)
-;;   (setq
-;;    tab-line-new-button-show nil
-;;    tab-line-close-button-show nil))
-
-
 ;; set font here to avoid os custom crap
 ;; set default font
 (cond
@@ -57,10 +44,7 @@
     (set-frame-font "Consolas-14" t t)))
  ((eq system-type 'darwin) ; macOS
   (when (member "Intel One Mono" (font-family-list))
-    (set-frame-font "Intel One Mono" t t)))
- ((eq system-type 'gnu/linux)
-  (when (member "DejaVu Sans Mono" (font-family-list))
-    (set-frame-font "DejaVu Sans Mono" t t))))
+    (set-frame-font "Intel One Mono" t t))))
 
 
 ;; Local Variables:

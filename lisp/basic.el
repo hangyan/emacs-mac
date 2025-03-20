@@ -140,17 +140,6 @@ FROM mark point TO end."
 (setq backup-directory-alist '((".*" . "~/.emacs-saves/")))
 
 
-;; helm and recentf
-;; (require 'helm)
-;; (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
-;; (global-set-key (kbd "C-x C-f") #'helm-find-files)
-;; (helm-mode 1)
-;; (global-set-key (kbd "M-x") 'helm-M-x)
-;; (setq helm-xref-candidate-formatting-function 'helm-xref-format-candidate-full-path)
-;; ;;(helm-recentf)
-;; (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
-;; (define-key helm-map (kbd "<tab>") #'helm-execute-persistent-action)
-;; (define-key helm-map (kbd "C-z") #'helm-select-action)
 
 
 ;; dired imrpovement
@@ -229,11 +218,6 @@ FROM mark point TO end."
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
 
-;; flycheck
-;; (use-package flycheck
-;;   :ensure t
-;;   :config
-;;   (add-hook 'after-init-hook #'global-flycheck-mode))
 
 
 ;; buffer cleanup
