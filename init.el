@@ -37,7 +37,8 @@
 
 (load-file "~/.emacs.d/lisp/basic.el")
 (load-file "~/.emacs.d/lisp/gui.el")
-(load-file "~/.emacs.d/lisp/tabline.el")
+;; Does this slow down my emacs?
+;; (load-file "~/.emacs.d/lisp/tabline.el")
 
 (cond
  ((eq system-type 'darwin)
@@ -50,7 +51,8 @@
 ;; does it kill lsp buffers?
 ;(load-file "~/.emacs.d/lisp/auto-kill-buffers.el")
 (load-file "~/.emacs.d/lisp/spell.el")
-(load-file "~/.emacs.d/lisp/yas.el")
+;; for performance.
+;; (load-file "~/.emacs.d/lisp/yas.el") 
 (load-file "~/.emacs.d/lisp/python.el")
 (load-file "~/.emacs.d/lisp/keys.el")
 (load-file "~/.emacs.d/lisp/helm.el")
@@ -242,6 +244,21 @@ We limit the search to just top 10 lines so as to only check the header."
           (read-only-mode 1)
           (message "Buffer seems to be generated. Set to read-only mode.")))))
   (add-hook 'find-file-hook 'meain/set-read-only-if-do-not-edit))
+
+
+;; try to make emacs fast.
+(setq display-line-numbers-type 'relative) ;; or 'visual for visual lines
+(setq mac-mouse-wheel-smooth-scroll nil) ;; Avoid choppy scrolling
+(setq mac-redisplay-dont-reset-vscroll t) ;; Avoid jumpy redisplay
+(setq mac-mouse-wheel-mode t) ;; Improve mouse-wheel scrolling
+(global-hl-line-mode -1)
+;; redisplay_internal take a lots of CPU
+(setq redisplay-dont-pause t)
+(setq redisplay-skip-fontification-on-input t)
+(setq jit-lock-defer-time 0)  ;; Immediately update fontification
+(setq jit-lock-stealth-time 1)  ;; More aggressive fontification delays
+(setq jit-lock-contextually t)  ;; Context-sensitive fontification (for better performance)
+
 
 (message "INIT DONE")
 

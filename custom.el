@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(company-tooltip-align-annotations t)
- '(custom-enabled-themes '(leuven-dark))
+ '(custom-enabled-themes '(wombat tango))
  '(custom-safe-themes
    '("e452b385e3f9cb05603fef58f3d65f73774137943fd75e6281dab3ff385851b9"
      "fdaf036ac62069f9b785ad2486b8106fb704b7c898d73ff7f66dc657523349d3"
