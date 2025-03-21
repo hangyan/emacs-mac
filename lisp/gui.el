@@ -46,6 +46,9 @@
   (when (member "Intel One Mono" (font-family-list))
     (set-frame-font "Intel One Mono" t t))))
 
+;; set fond for mode line.
+(set-face-attribute 'mode-line nil
+                    :font "Intel One Mono")
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars)

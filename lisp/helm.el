@@ -64,7 +64,7 @@
    helm-boring-file-regexp-list
    '("\\.git$" "\\.hg$" "\\.svn$" "\\.CVS$" "\\._darcs$" "\\.la$" "\\.o$" "\\.i$") ; do not show these files in helm buffer
    helm-ff-file-name-history-use-recentf t
-   ;; helm-buffers   
+   ;; helm-buffers
    helm-buffers-fuzzy-matching t          ; fuzzy matching buffer names when non--nil
                                           ; useful in helm-mini that lists buffers
    ;; ido
@@ -164,6 +164,8 @@
 	"\\`\\*xref"       ; ignore xref/lsp
 	"\\`\\*gopls"      ; lsp related
 	"\\`\\*lsp-log"    ; lsp log
+	"\\`\\*Backtrace"  ; backtrace
+	"\\`\\*LSP"         ; LSP errors
 	"\\`\\*Async-native-com" ; native comp
         "\\`\\*scratch"    ; Ignore *scratch* buffer
         "\\` "             ; Ignore buffers starting with a space (internal)
@@ -175,3 +177,11 @@
   :config
   (diminish 'helm-mode "")
   (helm-mode 1))
+
+
+;; Local Variables:
+;; byte-compile-warnings: (not free-vars)
+;; End:
+
+(provide helm)
+;;; helm.el ends here
