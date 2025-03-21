@@ -177,6 +177,7 @@
 (setq ido-use-virtual-buffers t)
 (setq ido-everywhere t)
 ;; (ido-mode t)
+;;(ido-mode 'buffers)
 
 ;; yes or now questions
 (fset 'yes-or-no-p 'y-or-n-p)  ;; Ask for y/n instead of yes/no

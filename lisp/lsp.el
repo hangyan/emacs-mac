@@ -92,6 +92,17 @@
 (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
 
 
+;; make treemacs-symbols show on the right side
+(setq lsp-treemacs-symbols-position-params
+      '((side . right)
+        (slot . 1)
+        (window-width . 35)))
+
+
+(add-to-list 'display-buffer-alist
+             '("\\*xref\\*"
+               (display-buffer-reuse-window display-buffer-at-bottom)
+               (window-height . 10)))
 
 
 ;; Local Variables:

@@ -1,14 +1,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Helm
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package helm-config
-  :init
-  (custom-set-variables '(helm-command-prefix-key "C-;"))
-  :config
-  (bind-keys :map helm-command-map
-             ("a" . helm-ag)
-             ("o" . helm-occur)
-             ("y" . yas-insert-snippet)))
+;; (use-package helm-config
+;;   :ensure t
+;;   :init
+;;   (custom-set-variables '(helm-command-prefix-key "C-;"))
+;;   :config
+;;   (bind-keys :map helm-command-map
+;;              ("a" . helm-ag)
+;;              ("o" . helm-occur)
+;;              ("y" . yas-insert-snippet)))
+
+(require 'diminish)
 
 (use-package helm
   ;; :init
@@ -142,12 +145,30 @@
   (fset 'helm-gtags-mode nil)
   )
 
-(use-package helm-flyspell
-  :config
-  (bind-key "C-; m" 'helm-flyspell-correct flyspell-mode-map))
+;; (use-package helm-flyspell
+;;   :config
+;;   :ensure t
+;;   (bind-key "C-; m" 'helm-flyspell-correct flyspell-mode-map))
 
 ;;; Save current position to mark ring
 (add-hook 'helm-goto-line-before-hook 'helm-save-current-pos-to-mark-ring)
+
+;; ignore some buffers during switch; we should not skip the Warning buffer
+;; as we need to fix the errors.
+(setq helm-boring-buffer-regexp-list
+      '("\\`\\*helm"        ; Ignore Helm’s own buffers
+        "\\`\\*Echo"       ; Ignore echo area buffers
+        "\\`\\*Minibuf"    ; Ignore minibuffer-related buffers
+        "\\`\\*dashboard"  ; Ignore *Messages* buffer
+	"\\`\\*ag search"  ; ag search
+	"\\`\\*xref"       ; ignore xref/lsp
+	"\\`\\*gopls"      ; lsp related
+	"\\`\\*lsp-log"    ; lsp log
+	"\\`\\*Async-native-com" ; native comp
+        "\\`\\*scratch"    ; Ignore *scratch* buffer
+        "\\` "             ; Ignore buffers starting with a space (internal)
+        "\\`\\*Help"       ; Ignore *Help* buffer
+        "\\`\\*Completions"))  ; Ignore completion buffers
 
 ;; start helm-mode
 (use-package helm-mode
