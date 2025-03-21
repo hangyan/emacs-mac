@@ -94,15 +94,15 @@ The DWIM behaviour of this command is as follows:
 
 ;; full path
 (setq frame-title-format
-      (list (format "%s %%S: %%j " (system-name))
-            '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+      '((:eval (if (buffer-file-name)
+                   (abbreviate-file-name (buffer-file-name))
+                 "%b"))))
 
 
 (setq mac-command-modifier 'meta)
 
 
 ;; query-and-repalce function
-
 (defun entire-buffer-replace (from to)
   "Do search and replace on entire buffer without moving point.
 FROM mark point TO end."
@@ -177,7 +177,10 @@ FROM mark point TO end."
   (setq trashed-sort-key '("Date deleted" . t))
   (setq trashed-date-format "%Y-%m-%d %H:%M:%S"))
 
-					; path settings
+
+
+
+
 (defun set-exec-path-from-shell-PATH ()
   "Path stuff."
   (interactive)
