@@ -19,10 +19,10 @@
  '(package-selected-packages
    '(ag blamer buffer-terminator calle24 company-box copilot
 	dashboard-hackernews deft diff-hl diminish dired-sidebar
-	dockerfile-mode doom-modeline dumb-jump exec-path-from-shell
-	expand-region flycheck-hl-todo git-gutter go-mode gotest
-	hackernews hammy helm helm-eshell helm-files helm-grep
-	helm-swoop highlight-symbol imenu-list indent-bars
+	dockerfile-mode doom-modeline dumb-jump elfmt
+	exec-path-from-shell expand-region flycheck-hl-todo git-gutter
+	go-mode gotest hackernews hammy helm helm-eshell helm-files
+	helm-grep helm-swoop highlight-symbol imenu-list indent-bars
 	indent-guide ivy kubed load-env-vars lsp-treemacs lsp-ui
 	marginalia markdownfmt md4rd melancholy-theme mistty
 	modus-themes mood-line orderless outline-indent projectile

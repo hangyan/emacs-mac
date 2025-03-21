@@ -18,7 +18,8 @@
 
 (use-package helm
   ;; :init
-  :ensure t
+  :ensure
+  t
   :config
   (setq
    helm-scroll-amount 4 ; scroll 4 lines other window using M-<next>/M-<prior>
@@ -44,21 +45,11 @@
              ("C-h" . delete-backward-char)))
 
 
-(use-package helm-elscreen :disabled
-  :config
-  (bind-keys :map helm-command-map
-             ("t" . nil)
-             ("t" . helm-elscreen)))
-
-(use-package helm-dabbrev
-  :config
-  (bind-keys :map helm-command-map
-             ("d". helm-dabbrev)))
-
 
 ;; WTF. this is useful!!!
 (use-package helm-swoop
-  :ensure t
+  :ensure
+  t
   :bind
   (("M-o" . helm-swoop)
    ("M-O" . helm-swoop-back-to-last-point)
@@ -82,13 +73,9 @@
              )
   )
 
-;; (use-package helm-flyspell
-;;   :config
-;;   :ensure t
-;;   (bind-key "C-; m" 'helm-flyspell-correct flyspell-mode-map))
-
 ;;; Save current position to mark ring
-(add-hook 'helm-goto-line-before-hook 'helm-save-current-pos-to-mark-ring)
+(add-hook 'helm-goto-line-before-hook
+	  'helm-save-current-pos-to-mark-ring)
 
 ;; ignore some buffers during switch; we should not skip the Warning buffer
 ;; as we need to fix the errors.
@@ -112,7 +99,10 @@
         "\\` "             ; Ignore buffers starting with a space (internal)
         "\\`\\*Help"       ; Ignore *Help* buffer
 	"\\`\\*Buffer List*"   ; buffer list buffer
-        "\\`\\*Completions"))  ; Ignore completion buffers
+        "\\`\\*Completions" ; Ignore completion buffers
+	)
+      )
+
 
 ;; start helm-mode
 (use-package helm-mode

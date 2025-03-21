@@ -9,11 +9,11 @@
 
 ;; for windows to use, set $HOME env for user first
 (setq custom-file
-       (expand-file-name (concat "~/.emacs.d/"
-                                 (if (eq system-type 'windows-nt)
-                                     "win-"
-                                   "")
-                                 "custom.el")))
+      (expand-file-name (concat "~/.emacs.d/"
+                                (if (eq system-type 'windows-nt)
+                                    "win-"
+                                  "")
+                                "custom.el")))
 (load custom-file :no-error-if-file-is-missing)
 
 ;; use package settings
@@ -27,8 +27,8 @@
 
 
 (dolist (package '(use-package))
-   (unless (package-installed-p package)
-       (package-install package)))
+  (unless (package-installed-p package)
+    (package-install package)))
 
 ;; disable warning logs during package install
 (add-to-list 'display-buffer-alist
@@ -45,13 +45,13 @@
 (cond
  ((eq system-type 'darwin)
   (progn
-  (load-file "~/.emacs.d/lisp/lsp.el")  ))
+    (load-file "~/.emacs.d/lisp/lsp.el")  ))
  (t
   (progn
     (message "skip loadding lsp for now."))))
 
 ;; does it kill lsp buffers?
-;(load-file "~/.emacs.d/lisp/auto-kill-buffers.el")
+					;(load-file "~/.emacs.d/lisp/auto-kill-buffers.el")
 (load-file "~/.emacs.d/lisp/spell.el")
 ;; for performance.
 ;; (load-file "~/.emacs.d/lisp/yas.el")
@@ -59,6 +59,7 @@
 (load-file "~/.emacs.d/lisp/keys.el")
 (load-file "~/.emacs.d/lisp/helm.el")
 
+(message "load all files done")
 
 ;; face
 (require 'company-box)
@@ -74,11 +75,11 @@
     (setq-default flycheck-disabled-checkers '(yaml-yamllint))))
 (add-to-list 'display-buffer-alist
              `(,(rx bos "*Flycheck errors*" eos)
-              (display-buffer-reuse-window
-               display-buffer-in-side-window)
-              (side            . bottom)
-              (reusable-frames . visible)
-              (window-height   . 0.25)))
+               (display-buffer-reuse-window
+		display-buffer-in-side-window)
+               (side            . bottom)
+               (reusable-frames . visible)
+               (window-height   . 0.25)))
 
 
 ;; indent-guide
@@ -137,7 +138,7 @@
 
 ;; highlight current symbol
 (use-package auto-highlight-symbol
-  ; this only installs it for programming mode derivatives; you can also make it global...
+					; this only installs it for programming mode derivatives; you can also make it global...
   :init (add-hook 'prog-mode-hook 'highlight-symbol-mode)
   :bind (:map auto-highlight-symbol-mode-map
               ("M-p" . ahs-backward)
@@ -146,16 +147,16 @@
 (load-file "~/.emacs.d/3rd/hl-todo.el")
 ;; highlight TODO...
 (use-package hl-todo
-    :hook (prog-mode . hl-todo-mode)
-    :config
-    (setq hl-todo-highlight-punctuation ":"
-          hl-todo-keyword-faces
-          `(("TODO"       warning bold)
-            ("FIXME"      error bold)
-            ("HACK"       font-lock-constant-face bold)
-            ("REVIEW"     font-lock-keyword-face bold)
-            ("NOTE"       success bold)
-            ("DEPRECATED" font-lock-doc-face bold))))
+  :hook (prog-mode . hl-todo-mode)
+  :config
+  (setq hl-todo-highlight-punctuation ":"
+        hl-todo-keyword-faces
+        `(("TODO"       warning bold)
+          ("FIXME"      error bold)
+          ("HACK"       font-lock-constant-face bold)
+          ("REVIEW"     font-lock-keyword-face bold)
+          ("NOTE"       success bold)
+          ("DEPRECATED" font-lock-doc-face bold))))
 
 (use-package rg
   :ensure t
@@ -179,8 +180,8 @@
   :bind
   (("C-x p g" . rg-project)
    ("C-x p t" . my-rg-todo)
-  ("M-SPC" . my/rg-project)))
-    
+   ("M-SPC" . my/rg-project)))
+
 
 (use-package emacs
   :config

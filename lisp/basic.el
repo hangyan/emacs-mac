@@ -10,10 +10,7 @@
     (copy-region-as-kill beg end)  ; Copy the line without deleting
     (activate-mark)                ; Highlight the region
     (message "Line copied"))
-  (deactivate-mark))
-					; Optionally deactivate the
-mark after operation
-
+  (deactivate-mark)) ; Optionally deactivate the mark after operation
 
 ;; link: https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
 (use-package delsel
@@ -98,7 +95,7 @@ The DWIM behaviour of this command is as follows:
 ;; full path
 (setq frame-title-format
       (list (format "%s %%S: %%j " (system-name))
-        '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+            '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 
 
 (setq mac-command-modifier 'meta)
@@ -180,21 +177,21 @@ FROM mark point TO end."
   (setq trashed-sort-key '("Date deleted" . t))
   (setq trashed-date-format "%Y-%m-%d %H:%M:%S"))
 
-; path settings
+					; path settings
 (defun set-exec-path-from-shell-PATH ()
   "Path stuff."
   (interactive)
   (let ((path-from-shell (replace-regexp-in-string
                           "[ \t\n]*$" "" (shell-command-to-string
                                           "$SHELL --login -c 'echo $PATH'"
-                                                    ))))
+                                          ))))
     (setenv "PATH" path-from-shell)
     (setq exec-path (split-string path-from-shell path-separator))))
 (set-exec-path-from-shell-PATH)
 
 
 (cond ((eq system-type 'windows-nt)
-        ;; Windows-specific code goes here.
+       ;; Windows-specific code goes here.
        (add-to-list 'exec-path "c:/Program Files/Git/bin")
        (add-to-list 'exec-path "c:/ProgramData/chocolatey/bin")
        (add-to-list 'exec-path
@@ -226,52 +223,52 @@ FROM mark point TO end."
 (defun ido-goto-symbol (&optional symbol-list)
   "Refresh imenu and jump to a place in the buffer using Ido.
 SYMBOL-LIST."
-      (interactive)
-      (unless (featurep 'imenu)
-        (require 'imenu nil t))
+  (interactive)
+  (unless (featurep 'imenu)
+    (require 'imenu nil t))
+  (cond
+   ((not symbol-list)
+    (let ((ido-mode ido-mode)
+          (ido-enable-flex-matching
+           (if (boundp 'ido-enable-flex-matching)
+               ido-enable-flex-matching
+	     t))
+          name-and-pos symbol-names position)
+      (unless ido-mode
+        (ido-mode 1)
+        (setq ido-enable-flex-matching t))
+      (while (progn
+               (imenu--cleanup)
+               (setq imenu--index-alist nil)
+               (ido-goto-symbol (imenu--make-index-alist))
+               (setq selected-symbol
+                     (ido-completing-read "Symbol? " symbol-names))
+               (string= (car imenu--rescan-item) selected-symbol)))
+      (unless (and (boundp 'mark-active) mark-active)
+        (push-mark nil t nil))
+      (setq position (cdr (assoc selected-symbol name-and-pos)))
       (cond
-       ((not symbol-list)
-        (let ((ido-mode ido-mode)
-              (ido-enable-flex-matching
-               (if (boundp 'ido-enable-flex-matching)
-                   ido-enable-flex-matching
-		 t))
-              name-and-pos symbol-names position)
-          (unless ido-mode
-            (ido-mode 1)
-            (setq ido-enable-flex-matching t))
-          (while (progn
-                   (imenu--cleanup)
-                   (setq imenu--index-alist nil)
-                   (ido-goto-symbol (imenu--make-index-alist))
-                   (setq selected-symbol
-                         (ido-completing-read "Symbol? " symbol-names))
-                   (string= (car imenu--rescan-item) selected-symbol)))
-          (unless (and (boundp 'mark-active) mark-active)
-            (push-mark nil t nil))
-          (setq position (cdr (assoc selected-symbol name-and-pos)))
-          (cond
-           ((overlayp position)
-            (goto-char (overlay-start position)))
-           (t
-            (goto-char position)))))
-       ((listp symbol-list)
-        (dolist (symbol symbol-list)
-          (let (name position)
-            (cond
-             ((and (listp symbol) (imenu--subalist-p symbol))
-              (ido-goto-symbol symbol))
-             ((listp symbol)
-              (setq name (car symbol))
-              (setq position (cdr symbol)))
-             ((stringp symbol)
-              (setq name symbol)
-              (setq position
-                    (get-text-property 1 'org-imenu-marker symbol))))
-            (unless (or (null position) (null name)
-                        (string= (car imenu--rescan-item) name))
-              (add-to-list 'symbol-names name)
-              (add-to-list 'name-and-pos (cons name position))))))))
+       ((overlayp position)
+        (goto-char (overlay-start position)))
+       (t
+        (goto-char position)))))
+   ((listp symbol-list)
+    (dolist (symbol symbol-list)
+      (let (name position)
+        (cond
+         ((and (listp symbol) (imenu--subalist-p symbol))
+          (ido-goto-symbol symbol))
+         ((listp symbol)
+          (setq name (car symbol))
+          (setq position (cdr symbol)))
+         ((stringp symbol)
+          (setq name symbol)
+          (setq position
+                (get-text-property 1 'org-imenu-marker symbol))))
+        (unless (or (null position) (null name)
+                    (string= (car imenu--rescan-item) name))
+          (add-to-list 'symbol-names name)
+          (add-to-list 'name-and-pos (cons name position))))))))
 
 ;; buffer cleanup
 (use-package buffer-terminator
@@ -293,27 +290,38 @@ excluding files in .git directories."
     (if project-root
         (let*
 	    ((files (directory-files-recursively project-root "" nil))
-               (filtered-files (seq-remove (lambda (file)
-                                            (string-match-p
-					     (concat "/"
-						     (regexp-quote
-						      ".git")
-						     "/")
-					     file))
-                                          files))
-               (relative-files (mapcar (lambda (file)
-                                        (file-relative-name file
-							    project-root))
-                                      filtered-files))
-               (file
-		(completing-read "Find file in project: "
-				 relative-files)))
+             (filtered-files (seq-remove (lambda (file)
+                                           (string-match-p
+					    (concat "/"
+						    (regexp-quote
+						     ".git")
+						    "/")
+					    file))
+                                         files))
+             (relative-files (mapcar (lambda (file)
+                                       (file-relative-name file
+							   project-root))
+                                     filtered-files))
+             (file
+	      (completing-read "Find file in project: "
+			       relative-files)))
           (find-file (concat project-root file)))
       (message "Not inside a Git repository"))))
 
 (global-set-key (kbd "C-c p f") 'find-files-in-git-project)
 ;; to avoid old habbits.
 (global-set-key (kbd "C-x p f") 'find-files-in-git-project)
+
+
+;; auto format for elisp
+
+(defun my-elisp-format-buffer ()
+  "Re-indent the entire buffer."
+  (interactive)
+  (indent-region (point-min) (point-max)))
+(add-hook 'emacs-lisp-mode-hook
+          (lambda ()
+            (add-hook 'before-save-hook #'my-elisp-format-buffer nil t)))
 
 
 
