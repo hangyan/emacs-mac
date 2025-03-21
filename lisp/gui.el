@@ -6,6 +6,13 @@
 (setq imenu-list-auto-resize t)
 (setq imenu-list-position 'left)
 
+
+(setq inhibit-startup-message t)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+
+
+
 ;; windows
 (defun switch-to-minibuffer ()
   "Switch to minibuffer window."

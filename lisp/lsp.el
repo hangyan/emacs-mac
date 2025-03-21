@@ -61,7 +61,7 @@
 
 ;; lsp booster
 (defun lsp-booster--advice-json-parse (old-fn &rest args)
-  "Try to parse bytecode instead of json."
+  "Try to parse bytecode instead of json by OLD-FN."
   (or
    (when (equal (following-char) ?#)
      (let ((bytecode (read (current-buffer))))

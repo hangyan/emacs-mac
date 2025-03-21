@@ -183,5 +183,5 @@
 ;; byte-compile-warnings: (not free-vars)
 ;; End:
 
-(provide helm)
+
 ;;; helm.el ends here

@@ -118,7 +118,8 @@
 
 ;; ido imenu
 (defun ido-goto-symbol (&optional symbol-list)
-      "Refresh imenu and jump to a place in the buffer using Ido."
+  "Refresh imenu and jump to a place in the buffer using Ido.
+SYMBOL-LIST."
       (interactive)
       (unless (featurep 'imenu)
         (require 'imenu nil t))
@@ -254,7 +255,7 @@ We limit the search to just top 10 lines so as to only check the header."
 (setq mac-mouse-wheel-mode t) ;; Improve mouse-wheel scrolling
 (global-hl-line-mode -1)
 ;; redisplay_internal take a lots of CPU
-(setq redisplay-dont-pause t)
+;; (setq redisplay-dont-pause t) ;; no use any more
 (setq redisplay-skip-fontification-on-input t)
 (setq jit-lock-defer-time 0)  ;; Immediately update fontification
 (setq jit-lock-stealth-time 1)  ;; More aggressive fontification delays

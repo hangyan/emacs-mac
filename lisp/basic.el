@@ -94,10 +94,6 @@ The DWIM behaviour of this command is as follows:
         '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 
 
-(setq inhibit-startup-message t)
-(scroll-bar-mode -1)
-;; (tool-bar-mode -1)
-
 (setq mac-command-modifier 'meta)
 
 
