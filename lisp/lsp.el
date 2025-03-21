@@ -59,6 +59,7 @@
 (setq treemacs-git-mode 'simple)
 (setq treemacs-git-commit-diff-mode t)
 
+
 ;; lsp booster
 (defun lsp-booster--advice-json-parse (old-fn &rest args)
   "Try to parse bytecode instead of json by OLD-FN."
@@ -102,7 +103,7 @@
 (add-to-list 'display-buffer-alist
              '("\\*xref\\*"
                (display-buffer-reuse-window display-buffer-at-bottom)
-               (window-height . 10)))
+               (window-height . 15)))
 
 
 ;; Local Variables:

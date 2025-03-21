@@ -164,8 +164,11 @@
 	"\\`\\*xref"       ; ignore xref/lsp
 	"\\`\\*gopls"      ; lsp related
 	"\\`\\*lsp-log"    ; lsp log
+	"\\`\\*pylsp"      ; pylsp buffer
+	"\\`\\*Bookmark"   ; bookmark list
 	"\\`\\*Backtrace"  ; backtrace
-	"\\`\\*LSP"         ; LSP errors
+	"\\`\\*LSP"        ; LSP errors
+	"\\`\\*Flycheck"   ; flycheck errors
 	"\\`\\*Async-native-com" ; native comp
         "\\`\\*scratch"    ; Ignore *scratch* buffer
         "\\` "             ; Ignore buffers starting with a space (internal)
@@ -178,6 +181,10 @@
   (diminish 'helm-mode "")
   (helm-mode 1))
 
+
+;; helm find files in project. not sure why the locate one is not working
+;; and also project-find-files not working
+(setq helm-locate-command "mdfind -name")
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars)

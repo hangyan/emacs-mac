@@ -176,7 +176,7 @@ SYMBOL-LIST."
 (setq ido-enable-flex-matching t)
 (setq ido-case-fold t)
 (setq ido-use-virtual-buffers t)
-(setq ido-everywhere t)
+;; (setq ido-everywhere t)
 ;; (ido-mode t)
 ;;(ido-mode 'buffers)
 
@@ -261,6 +261,22 @@ We limit the search to just top 10 lines so as to only check the header."
 (setq jit-lock-stealth-time 1)  ;; More aggressive fontification delays
 (setq jit-lock-contextually t)  ;; Context-sensitive fontification (for better performance)
 
+
+;; debug on errors. maybe lead to quit.
+(setq debug-on-error t)
+
+;; a basic one. helm/project not working.
+(defun find-files-in-git-project ()
+  "Recursively search for and open files in the current Git project."
+  (interactive)
+  (let ((project-root (vc-git-root default-directory)))
+    (if project-root
+        (let* ((files (directory-files-recursively project-root "" nil))
+               (file (completing-read "Find file in project: " files)))
+          (find-file file))
+      (message "Not inside a Git repository"))))
+
+(global-set-key (kbd "C-c p f") 'find-files-in-git-project)
 
 (message "INIT DONE")
 

@@ -4,6 +4,7 @@
 
 ;; flyspell
 
+
 (defun flyspell-on-for-buffer-type ()
   "Enable Flyspell appropriately for the major mode of the current buffer.
 Uses `flyspell-prog-mode' for modes derived from `prog-mode', so only strings

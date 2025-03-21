@@ -24,11 +24,11 @@
 	hackernews hammy helm highlight-symbol imenu-list indent-bars
 	indent-guide ivy kubed load-env-vars lsp-treemacs lsp-ui
 	marginalia markdownfmt md4rd melancholy-theme mistty
-	modus-themes mood-line orderless outline-indent python-black
-	rainbow-delimiters rg shfmt smart-compile smart-mode-line
-	smartparens sml-mode spacegray-theme symbol-overlay
-	telephone-line terraform-mode trashed vertico visual-replace
-	yaml-mode yasnippet-snippets))
+	modus-themes mood-line orderless outline-indent projectile
+	python-black rainbow-delimiters rg shfmt smart-compile
+	smart-mode-line smartparens sml-mode spacegray-theme
+	symbol-overlay telephone-line terraform-mode trashed vertico
+	visual-replace yaml-mode yasnippet-snippets))
  '(package-vc-selected-packages
    '((copilot :url "https://github.com/copilot-emacs/copilot.el" :branch
 	      "main")))
