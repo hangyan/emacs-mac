@@ -267,16 +267,26 @@ We limit the search to just top 10 lines so as to only check the header."
 
 ;; a basic one. helm/project not working.
 (defun find-files-in-git-project ()
-  "Recursively search for and open files in the current Git project."
+  "Recursively search for and open files in the current Git project.
+excluding files in .git directories."
   (interactive)
   (let ((project-root (vc-git-root default-directory)))
     (if project-root
         (let* ((files (directory-files-recursively project-root "" nil))
-               (file (completing-read "Find file in project: " files)))
-          (find-file file))
+               (filtered-files (seq-remove (lambda (file)
+                                            (string-match-p (concat "/" (regexp-quote ".git") "/") file))
+                                          files))
+               (relative-files (mapcar (lambda (file)
+                                        (file-relative-name file project-root))
+                                      filtered-files))
+               (file (completing-read "Find file in project: " relative-files)))
+          (find-file (concat project-root file)))
       (message "Not inside a Git repository"))))
 
 (global-set-key (kbd "C-c p f") 'find-files-in-git-project)
+;; to avoid old habbits.
+(global-set-key (kbd "C-x p f") 'find-files-in-git-project)
+
 
 (message "INIT DONE")
 

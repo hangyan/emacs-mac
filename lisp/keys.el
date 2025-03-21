@@ -64,7 +64,7 @@
 (global-set-key (kbd "C-x g t") 'go-test-current-test)
 (global-set-key (kbd "C-x g f") 'go-test-current-file)
 
-(global-set-key (kbd "C-x n f") 'mark-from-point-to-end-of-line)
+(global-set-key (kbd "C-c c") 'copy-current-line)
 (global-set-key (kbd "C-x n c") 'backward-copy-word)
 ;; bookmarks
 (global-set-key (kbd "C-x r l") 'list-bookmarks)

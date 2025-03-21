@@ -10,6 +10,17 @@
 
 
 
+(defun copy-current-line ()
+  "Copy the current line without deleting it and highlight the line."
+  (interactive)
+  (let ((beg (line-beginning-position))
+        (end (line-end-position)))
+    (copy-region-as-kill beg end)  ; Copy the line without deleting
+    (activate-mark)                ; Highlight the region
+    (message "Line copied"))
+  (deactivate-mark))               ; Optionally deactivate the mark after operation
+
+
 ;; link: https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
 (use-package delsel
   :ensure nil ; no need to install it as it is built-in
