@@ -2,14 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 ;; line operation
-(defun mark-from-point-to-end-of-line ()
-  "Mark everything from point to end of line."
-  (interactive)
-  (set-mark (line-end-position))
-  (activate-mark))
-
-
-
 (defun copy-current-line ()
   "Copy the current line without deleting it and highlight the line."
   (interactive)
@@ -18,12 +10,15 @@
     (copy-region-as-kill beg end)  ; Copy the line without deleting
     (activate-mark)                ; Highlight the region
     (message "Line copied"))
-  (deactivate-mark))               ; Optionally deactivate the mark after operation
+  (deactivate-mark))
+					; Optionally deactivate the
+mark after operation
 
 
 ;; link: https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
 (use-package delsel
-  :ensure nil ; no need to install it as it is built-in
+  :ensure
+  nil ; no need to install it as it is built-in
   :hook (after-init . delete-selection-mode))
 
 ;; make C-g more useful
@@ -51,28 +46,29 @@ The DWIM behaviour of this command is as follows:
    (t
     (keyboard-quit))))
 
-
-
-
 ;; vertical minibuffer promt / fuzzy match
 ;; these packages will replace helm.
 (use-package vertico
-  :ensure t
+  :ensure
+  t
   :hook (after-init . vertico-mode))
 
 (use-package marginalia
-  :ensure t
+  :ensure
+  t
   :hook (after-init . marginalia-mode))
 
 (use-package orderless
-  :ensure t
+  :ensure
+  t
   :config
   (setq completion-styles '(orderless basic))
   (setq completion-category-defaults nil)
   (setq completion-category-overrride nil))
 
 (use-package savehist
-  :ensure nil ; it is built-in
+  :ensure
+  nil ; it is built-in
   :hook (after-init . savehist-mode))
 
 
@@ -147,11 +143,10 @@ FROM mark point TO end."
 (setq backup-directory-alist '((".*" . "~/.emacs-saves/")))
 
 
-
-
 ;; dired imrpovement
 (use-package dired
-  :ensure nil
+  :ensure
+  nil
   :commands (dired)
   :hook
   ((dired-mode . dired-hide-details-mode)
@@ -163,7 +158,8 @@ FROM mark point TO end."
   (setq dired-dwim-target t))
 
 (use-package dired-subtree
-  :ensure t
+  :ensure
+  t
   :after dired
   :bind
   ( :map dired-mode-map
@@ -175,16 +171,14 @@ FROM mark point TO end."
   (setq dired-subtree-use-backgrounds nil))
 
 (use-package trashed
-  :ensure t
+  :ensure
+  t
   :commands (trashed)
   :config
   (setq trashed-action-confirmer 'y-or-n-p)
   (setq trashed-use-header-line t)
   (setq trashed-sort-key '("Date deleted" . t))
   (setq trashed-date-format "%Y-%m-%d %H:%M:%S"))
-
-
-
 
 ; path settings
 (defun set-exec-path-from-shell-PATH ()
@@ -203,7 +197,8 @@ FROM mark point TO end."
         ;; Windows-specific code goes here.
        (add-to-list 'exec-path "c:/Program Files/Git/bin")
        (add-to-list 'exec-path "c:/ProgramData/chocolatey/bin")
-       (add-to-list 'exec-path "c:/Users/win/AppData/Local/Microsoft/WindowsApps")
+       (add-to-list 'exec-path
+		    "c:/Users/win/AppData/Local/Microsoft/WindowsApps")
        (setenv "GOROOT" "c:/Program Files/Go")
        (setenv "GOPATH" "d:/go")
        (add-to-list 'exec-path "c:/Program Files/go/bin")
@@ -213,28 +208,114 @@ FROM mark point TO end."
        ;; mac-specific code goes here.
        (setenv "GOROOT" "/usr/local/Cellar/go/1.24.1/libexec/")
        (setenv "GOPATH" "/Users/yayu/Golang")
-
        (add-to-list 'exec-path "~/Golang/bin")
        (if (file-exists-p "~/.go.env")
 	   (load-env-vars "~/.go.env"))
-       (setenv "PATH" (concat  "/usr/local/Cellar/go/1.24.1/libexec/bin" ":" (getenv "PATH")))
+       (setenv "PATH"
+	       (concat  "/usr/local/Cellar/go/1.24.1/libexec/bin" ":"
+			(getenv "PATH")))
        ))
 
 
 ;; expand region
 (use-package expand-region
-  :bind ("C-=" . er/expand-region))
+  :bind
+  ("C-=" . er/expand-region))
 
-
+;; ido jump --> no keys yet..
+(defun ido-goto-symbol (&optional symbol-list)
+  "Refresh imenu and jump to a place in the buffer using Ido.
+SYMBOL-LIST."
+      (interactive)
+      (unless (featurep 'imenu)
+        (require 'imenu nil t))
+      (cond
+       ((not symbol-list)
+        (let ((ido-mode ido-mode)
+              (ido-enable-flex-matching
+               (if (boundp 'ido-enable-flex-matching)
+                   ido-enable-flex-matching
+		 t))
+              name-and-pos symbol-names position)
+          (unless ido-mode
+            (ido-mode 1)
+            (setq ido-enable-flex-matching t))
+          (while (progn
+                   (imenu--cleanup)
+                   (setq imenu--index-alist nil)
+                   (ido-goto-symbol (imenu--make-index-alist))
+                   (setq selected-symbol
+                         (ido-completing-read "Symbol? " symbol-names))
+                   (string= (car imenu--rescan-item) selected-symbol)))
+          (unless (and (boundp 'mark-active) mark-active)
+            (push-mark nil t nil))
+          (setq position (cdr (assoc selected-symbol name-and-pos)))
+          (cond
+           ((overlayp position)
+            (goto-char (overlay-start position)))
+           (t
+            (goto-char position)))))
+       ((listp symbol-list)
+        (dolist (symbol symbol-list)
+          (let (name position)
+            (cond
+             ((and (listp symbol) (imenu--subalist-p symbol))
+              (ido-goto-symbol symbol))
+             ((listp symbol)
+              (setq name (car symbol))
+              (setq position (cdr symbol)))
+             ((stringp symbol)
+              (setq name symbol)
+              (setq position
+                    (get-text-property 1 'org-imenu-marker symbol))))
+            (unless (or (null position) (null name)
+                        (string= (car imenu--rescan-item) name))
+              (add-to-list 'symbol-names name)
+              (add-to-list 'name-and-pos (cons name position))))))))
 
 ;; buffer cleanup
 (use-package buffer-terminator
-  :ensure t
+  :ensure
+  t
   :custom
   (buffer-terminator-verbose nil)
   (buffer-terminator-verbose t)
   :config
   (buffer-terminator-mode 1))
+
+
+;; a basic one. the helm/project one not working.
+(defun find-files-in-git-project ()
+  "Recursively search for and open files in the current Git project.
+excluding files in .git directories."
+  (interactive)
+  (let ((project-root (vc-git-root default-directory)))
+    (if project-root
+        (let*
+	    ((files (directory-files-recursively project-root "" nil))
+               (filtered-files (seq-remove (lambda (file)
+                                            (string-match-p
+					     (concat "/"
+						     (regexp-quote
+						      ".git")
+						     "/")
+					     file))
+                                          files))
+               (relative-files (mapcar (lambda (file)
+                                        (file-relative-name file
+							    project-root))
+                                      filtered-files))
+               (file
+		(completing-read "Find file in project: "
+				 relative-files)))
+          (find-file (concat project-root file)))
+      (message "Not inside a Git repository"))))
+
+(global-set-key (kbd "C-c p f") 'find-files-in-git-project)
+;; to avoid old habbits.
+(global-set-key (kbd "C-x p f") 'find-files-in-git-project)
+
+
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars)

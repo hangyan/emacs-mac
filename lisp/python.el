@@ -10,6 +10,8 @@
   :after python
   :hook (python-mode . python-black-on-save-mode))
 
+(setq python-indent-guess-indent-offset-verbose nil)
+
 
 (setq python-black-extra-args "--skip-string-normalization")
 

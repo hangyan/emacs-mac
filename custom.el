@@ -21,7 +21,8 @@
 	dashboard-hackernews deft diff-hl diminish dired-sidebar
 	dockerfile-mode doom-modeline dumb-jump exec-path-from-shell
 	expand-region flycheck-hl-todo git-gutter go-mode gotest
-	hackernews hammy helm highlight-symbol imenu-list indent-bars
+	hackernews hammy helm helm-eshell helm-files helm-grep
+	helm-swoop highlight-symbol imenu-list indent-bars
 	indent-guide ivy kubed load-env-vars lsp-treemacs lsp-ui
 	marginalia markdownfmt md4rd melancholy-theme mistty
 	modus-themes mood-line orderless outline-indent projectile

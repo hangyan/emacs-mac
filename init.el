@@ -20,9 +20,11 @@
 (setq use-package-enable-imenu-support t)
 
 (require 'package)
+(setq package-archives
+      '(("gnu" . "https://elpa.gnu.org/packages/")
+        ("melpa" . "https://melpa.org/packages/")))
 (package-initialize)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+
 
 (dolist (package '(use-package))
    (unless (package-installed-p package)
@@ -116,57 +118,6 @@
 (define-key markdown-mode-map (kbd "C-c C-f") #'markdownfmt-format-buffer)
 (put 'list-timers 'disabled nil)
 
-;; ido imenu
-(defun ido-goto-symbol (&optional symbol-list)
-  "Refresh imenu and jump to a place in the buffer using Ido.
-SYMBOL-LIST."
-      (interactive)
-      (unless (featurep 'imenu)
-        (require 'imenu nil t))
-      (cond
-       ((not symbol-list)
-        (let ((ido-mode ido-mode)
-              (ido-enable-flex-matching
-               (if (boundp 'ido-enable-flex-matching)
-                   ido-enable-flex-matching t))
-              name-and-pos symbol-names position)
-          (unless ido-mode
-            (ido-mode 1)
-            (setq ido-enable-flex-matching t))
-          (while (progn
-                   (imenu--cleanup)
-                   (setq imenu--index-alist nil)
-                   (ido-goto-symbol (imenu--make-index-alist))
-                   (setq selected-symbol
-                         (ido-completing-read "Symbol? " symbol-names))
-                   (string= (car imenu--rescan-item) selected-symbol)))
-          (unless (and (boundp 'mark-active) mark-active)
-            (push-mark nil t nil))
-          (setq position (cdr (assoc selected-symbol name-and-pos)))
-          (cond
-           ((overlayp position)
-            (goto-char (overlay-start position)))
-           (t
-            (goto-char position)))))
-       ((listp symbol-list)
-        (dolist (symbol symbol-list)
-          (let (name position)
-            (cond
-             ((and (listp symbol) (imenu--subalist-p symbol))
-              (ido-goto-symbol symbol))
-             ((listp symbol)
-              (setq name (car symbol))
-              (setq position (cdr symbol)))
-             ((stringp symbol)
-              (setq name symbol)
-              (setq position
-                    (get-text-property 1 'org-imenu-marker symbol))))
-            (unless (or (null position) (null name)
-                        (string= (car imenu--rescan-item) name))
-              (add-to-list 'symbol-names name)
-              (add-to-list 'name-and-pos (cons name position))))))))
-
-
 
 ;; dumb-jump
 (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
@@ -178,7 +129,7 @@ SYMBOL-LIST."
 (setq ido-use-virtual-buffers t)
 ;; (setq ido-everywhere t)
 ;; (ido-mode t)
-;;(ido-mode 'buffers)
+;; (ido-mode 'buffers)
 
 ;; yes or now questions
 (fset 'yes-or-no-p 'y-or-n-p)  ;; Ask for y/n instead of yes/no
@@ -257,46 +208,15 @@ We limit the search to just top 10 lines so as to only check the header."
 ;; redisplay_internal take a lots of CPU
 ;; (setq redisplay-dont-pause t) ;; no use any more
 (setq redisplay-skip-fontification-on-input t)
-(setq jit-lock-defer-time 0)  ;; Immediately update fontification
-(setq jit-lock-stealth-time 1)  ;; More aggressive fontification delays
-(setq jit-lock-contextually t)  ;; Context-sensitive fontification (for better performance)
+(setq jit-lock-defer-time 0)     ;; Immediately update fontification
+(setq jit-lock-stealth-time 1)   ;; More aggressive fontification delays
+(setq jit-lock-contextually t)   ;; Context-sensitive fontification (for better performance)
 
 
 ;; debug on errors. maybe lead to quit.
 (setq debug-on-error t)
 
-;; a basic one. helm/project not working.
-(defun find-files-in-git-project ()
-  "Recursively search for and open files in the current Git project.
-excluding files in .git directories."
-  (interactive)
-  (let ((project-root (vc-git-root default-directory)))
-    (if project-root
-        (let* ((files (directory-files-recursively project-root "" nil))
-               (filtered-files (seq-remove (lambda (file)
-                                            (string-match-p (concat "/" (regexp-quote ".git") "/") file))
-                                          files))
-               (relative-files (mapcar (lambda (file)
-                                        (file-relative-name file project-root))
-                                      filtered-files))
-               (file (completing-read "Find file in project: " relative-files)))
-          (find-file (concat project-root file)))
-      (message "Not inside a Git repository"))))
-
-(global-set-key (kbd "C-c p f") 'find-files-in-git-project)
-;; to avoid old habbits.
-(global-set-key (kbd "C-x p f") 'find-files-in-git-project)
-
-
-(message "INIT DONE")
-
-
-;; github copiot
-;; (use-package copilot
-;;   :vc (:url "https://github.com/copilot-emacs/copilot.el"
-;;             :rev :newest
-;;             :branch "main"))
-;; (add-hook 'prog-mode-hook 'copilot-mode)
+(message "init done. happy coding.")
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars)
