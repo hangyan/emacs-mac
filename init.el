@@ -4,7 +4,7 @@
 ;;  then config language settings.
 ;;; Code:
 
-(add-to-list 'load-path "~/.emacs.d/elisp/")
+(add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/3rd/")
 
 ;; for windows to use, set $HOME env for user first
@@ -45,7 +45,7 @@
 (cond
  ((eq system-type 'darwin)
   (progn
-    (load-file "~/.emacs.d/lisp/lsp.el")  ))
+    (load-file "~/.emacs.d/lisp/my-lsp.el")  ))
  (t
   (progn
     (message "skip loadding lsp for now."))))
@@ -55,9 +55,11 @@
 (load-file "~/.emacs.d/lisp/spell.el")
 ;; for performance.
 ;; (load-file "~/.emacs.d/lisp/yas.el")
-(load-file "~/.emacs.d/lisp/python.el")
+(load-file "~/.emacs.d/lisp/my-python.el")
 (load-file "~/.emacs.d/lisp/keys.el")
-(load-file "~/.emacs.d/lisp/helm.el")
+(load-file "~/.emacs.d/lisp/my-helm.el")
+;; bad code writeen by GPT
+;; (load-file "~/.emacs.d/lisp/star.el")
 
 (message "load all files done")
 
@@ -216,6 +218,14 @@ We limit the search to just top 10 lines so as to only check the header."
 
 ;; debug on errors. maybe lead to quit.
 (setq debug-on-error t)
+
+;; ytt star files
+;; Install emacs-bazel-mode using use-package
+(use-package bazel
+  :ensure t
+  :init
+  ;; Enable bazel-starlark-mode for .star files
+  (add-to-list 'auto-mode-alist '("\\.star\\'" . bazel-starlark-mode)))
 
 (message "init done. happy coding.")
 

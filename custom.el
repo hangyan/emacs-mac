@@ -17,19 +17,19 @@
  '(lsp-ui-imenu-auto-refresh 'after-save)
  '(lsp-ui-imenu-buffer-position 'left)
  '(package-selected-packages
-   '(ag blamer buffer-terminator calle24 company-box copilot
-	dashboard-hackernews deft diff-hl diminish dired-sidebar
-	dockerfile-mode doom-modeline dumb-jump elfmt
+   '(ag bazel bazel-mode blamer buffer-terminator calle24 company-box
+	copilot dashboard-hackernews deft diff-hl diminish
+	dired-sidebar dockerfile-mode doom-modeline dumb-jump elfmt
 	exec-path-from-shell expand-region flycheck-hl-todo git-gutter
 	go-mode gotest hackernews hammy helm helm-eshell helm-files
 	helm-grep helm-swoop highlight-symbol imenu-list indent-bars
 	indent-guide ivy kubed load-env-vars lsp-treemacs lsp-ui
 	marginalia markdownfmt md4rd melancholy-theme mistty
 	modus-themes mood-line orderless outline-indent projectile
-	python-black rainbow-delimiters rg shfmt smart-compile
-	smart-mode-line smartparens sml-mode spacegray-theme
-	symbol-overlay telephone-line terraform-mode trashed vertico
-	visual-replace yaml-mode yasnippet-snippets))
+	python-black python-mode rainbow-delimiters rg shfmt
+	smart-compile smart-mode-line smartparens sml-mode
+	spacegray-theme symbol-overlay telephone-line terraform-mode
+	trashed vertico visual-replace yaml-mode yasnippet-snippets))
  '(package-vc-selected-packages
    '((copilot :url "https://github.com/copilot-emacs/copilot.el" :branch
 	      "main")))

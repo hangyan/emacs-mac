@@ -12,7 +12,7 @@
 
 
 ;;; company
-(yas-global-mode)
+;; (yas-global-mode)
 (global-company-mode t)
 ;; Navigate in completion minibuffer with `C-n` and `C-p`.
 (define-key company-active-map (kbd "C-n") 'company-select-next)
@@ -23,7 +23,7 @@
 ;; go-mode lsp
 (add-hook 'go-mode-hook #'lsp-deferred)
 
-;； go mode rename
+					;； go mode rename
 ;; go install golang.org/x/tools/cmd/gorename@latest
 ;; not working, don't know why.
 
@@ -110,5 +110,5 @@
 ;; byte-compile-warnings: (not free-vars)
 ;; End:
 
-(provide 'lsp)
+(provide 'my-lsp)
 ;;; lsp.el ends here

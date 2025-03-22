@@ -15,5 +15,5 @@
 
 (setq python-black-extra-args "--skip-string-normalization")
 
-(provide 'python)
+(provide 'my-python)
 ;;; python.el ends here

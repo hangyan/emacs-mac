@@ -120,5 +120,5 @@
 ;; byte-compile-warnings: (not free-vars)
 ;; End:
 
-
-;;; helm.el ends here
+(provide 'my-helm)
+;;; my-helm.el ends here
